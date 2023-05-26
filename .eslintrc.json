@@ -18,6 +18,9 @@
     ],
     "rules": {
         "react/prop-types": "off",
+        "indent": "warn",
+        "quotes": "warn",
+        "semi": "warn",
         "no-unused-vars": "warn"
     },
     "settings": {
