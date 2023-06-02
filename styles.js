@@ -1,7 +1,7 @@
 
 const styles = {
   flexCenter: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
-  flexRowCenter: { display: 'flex', justifyContent: 'center', flexDirection: 'row', gap: 6 },
+  flexRowCenter: { display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 6 },
   settingsTitle: { fontSize: 18 },
   colors: {
     TextColor: '#0c030a',
@@ -9,10 +9,14 @@ const styles = {
     PrimaryButton: '#db708f',
     SecondaryButton: '#f5ddd6',
     AccentColor: '#b84c2e',
-    ActiveTab: '#edb7b7'
+    ActiveTab: '#edb7b7',
+    ErrorText: '#ff0022'
   },
-  errorText: {
-    color: '#ff0022'
+  icon: {
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.2)',
+    padding: 10,
+    borderRadius: 20
   }
 }
 
