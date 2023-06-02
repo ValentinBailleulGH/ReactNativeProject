@@ -19,11 +19,11 @@ export default {
     const BASE_URL = 'https://api.edamam.com/api/food-database/v2/'
 
     const urlParamsFormated = urlParams.map(({ name, value }) => {
-      return `${name}=${value}`
+      return `&${name}=${value}`
     })
 
     const URL = `${BASE_URL}${ressouces}?app_id=${APP_ID}&app_key=${APP_KEY}${
-      urlParamsFormated.length > 0 ? '&' + urlParamsFormated : ''
+      urlParamsFormated.length > 0 ? urlParamsFormated.join('') : ''
     }`
 
     console.log(URL)
@@ -48,6 +48,9 @@ export default {
       })
   },
   getFoods (ingredient) {
-    return this.call('GET', 'parser', [{ name: 'ingr', value: ingredient }])
+    return this.call('GET', 'parser', [
+      { name: 'ingr', value: ingredient },
+      { name: 'category', value: 'generic-foods' }
+    ])
   }
 }
