@@ -10,11 +10,19 @@ import FoodDatabaseScreen from '../screens/FoodDatabaseScreen'
 import MealPlanningScreen from '../screens/MealPlanningScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 
+import styles from '../styles'
+
 export default function ViewsHandler () {
   const Tab = createBottomTabNavigator()
   return (
       <NavigationContainer>
-        <Tab.Navigator initialRouteName="HealthGoals">
+        <Tab.Navigator
+          initialRouteName="HealthGoals"
+          screenOptions={({ route }) => ({
+            headerShown: false,
+            tabBarActiveBackgroundColor: styles.colors.ActiveTab
+          })}
+        >
           <Tab.Screen name="HealthGoals" component={ HealthGoalsScreen }
             options={{
               tabBarLabel: 'Health Goals',

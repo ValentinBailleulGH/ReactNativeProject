@@ -2,7 +2,17 @@
 const styles = {
   flexCenter: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
   settingsTitle: { fontSize: 18 },
-  colors: { Primary: '#0b082b', Secondary: '#dbd8f8', PrimaryButton: '#1d1575', SecondaryButton: '#c2bef4', AccentColor: '#22188b' }
+  colors: {
+    TextColor: '#0c030a',
+    BackgroundColor: '#faebf7',
+    PrimaryButton: '#db708f',
+    SecondaryButton: '#f5ddd6',
+    AccentColor: '#b84c2e',
+    ActiveTab: '#edb7b7'
+  },
+  errorText: {
+    color: '#ff0022'
+  }
 }
 
 export default styles

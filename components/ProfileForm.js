@@ -1,28 +1,39 @@
-import { View, Text } from 'react-native'
+import { View, Text, TextInput } from 'react-native'
 import React, { useState } from 'react'
 
-import Slider from '@react-native-community/slider'
-import styles from '../styles'
+// import Slider from '@react-native-community/slider'
 import { Picker } from '@react-native-picker/picker'
+
+// import { EmptyFieldWarning } from '../components/EmptyFieldWarning'
+
+import styles from '../styles'
 
 export default function ProfileForm () {
   const [age, setAge] = useState(undefined)
   const [gender, setGender] = useState(undefined)
+  const [height, setHeight] = useState(undefined)
 
   return (
-    <View style={{ display: 'flex', alignItems: 'center', backgroundColor: 'lightblue', paddingTop: 20, minHeight: '100%' }}>
+    <View style={{
+      display: 'flex',
+      alignItems: 'center',
+      paddingTop: 32,
+      minHeight: '100%',
+      gap: 32
+      // backgroundColor: styles.colors.BackgroundColor
+    }}>
 
       {/* AGE */}
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Text style={styles.settingsTitle}>{age ? `Age: ${age}` : 'Select your age'}</Text>
-        <Slider
-          style={{ width: 200, height: 40 }}
-          minimumValue={15}
-          maximumValue={80}
-          minimumTrackTintColor="#FFFFFF"
-          maximumTrackTintColor="#000000"
-          onValueChange={(newValue) => setAge(newValue.toFixed(0))}
+        <TextInput
+          onChangeText={setAge}
+          value={age}
+          placeholder="Select your age"
+          keyboardType="numeric"
+          maxLength={2}
         />
+        {/* <EmptyFieldWarning value={age} /> */}
       </View>
 
       {/* GENDER */}
@@ -30,7 +41,7 @@ export default function ProfileForm () {
         <Text style={styles.settingsTitle}>{gender ? `Gender: ${gender}` : 'Select your gender'}</Text>
         <Picker style={{ width: 200 }}
           selectedValue={gender}
-          onValueChange={(newValue) => setGender(newValue)}
+          onValueChange={setGender}
         >
           <Picker.Item label="Select..." value="" />
           <Picker.Item label="Male" value="Male" />
@@ -39,6 +50,17 @@ export default function ProfileForm () {
         </Picker>
       </View>
 
+      {/* Height */}
+      <View>
+        <Text style={styles.settingsTitle}>{height ? `Height: ${height}` : 'Select your height'}</Text>
+        <TextInput
+          onChangeText={setHeight}
+          value={height}
+          placeholder="Select your height (cm)"
+          keyboardType="numeric"
+          maxLength={3}
+        />
+      </View>
     </View>
   )
 }
