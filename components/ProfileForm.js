@@ -1,12 +1,13 @@
 import { View, Text, TextInput } from 'react-native'
 import React, { useState } from 'react'
-
-// import Slider from '@react-native-community/slider'
 import { Picker } from '@react-native-picker/picker'
-
-// import { EmptyFieldWarning } from '../components/EmptyFieldWarning'
-
 import styles from '../styles'
+
+const Warnin = ({ value }) => {
+  return !value
+    ? <Text style={styles.errorText}>This field cannot be empty</Text>
+    : null
+}
 
 export default function ProfileForm () {
   const [age, setAge] = useState(undefined)
@@ -23,42 +24,50 @@ export default function ProfileForm () {
     }}>
 
       {/* AGE */}
-      <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={styles.settingsTitle}>{age ? `Age: ${age}` : 'Select your age'}</Text>
-        <TextInput
-          onChangeText={setAge}
-          value={age}
-          placeholder="Select your age"
-          keyboardType="numeric"
-          maxLength={2}
-        />
-        {!age ? <Text style={styles.errorText}>This field cannot be empty</Text> : null}
+      <View style={styles.flexCenter}>
+        <View style={styles.flexRowCenter}>
+          <Text style={styles.settingsTitle}>Your age :</Text>
+          <TextInput
+            value={age}
+            onChangeText={setAge}
+            placeholder="Select your age"
+            keyboardType="numeric"
+            maxLength={2}
+          />
+        </View>
+        <Warnin value={age}/>
       </View>
 
       {/* GENDER */}
-      <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={styles.settingsTitle}>{gender ? `Gender: ${gender}` : 'Select your gender'}</Text>
-        <Picker style={{ width: 200 }}
-          selectedValue={gender}
-          onValueChange={setGender}
-        >
-          <Picker.Item label="Select..." value="" />
-          <Picker.Item label="Male" value="Male" />
-          <Picker.Item label="Female" value="Female" />
-          <Picker.Item label="Other" value="Other" />
-        </Picker>
+      <View style={styles.flexCenter}>
+        <View style={styles.flexRowCenter}>
+          <Text style={styles.settingsTitle}>Your gender :</Text>
+          <Picker style={{ width: 200 }}
+            selectedValue={gender}
+            onValueChange={setGender}
+          >
+            <Picker.Item label="Select..." value="" />
+            <Picker.Item label="Male" value="Male" />
+            <Picker.Item label="Female" value="Female" />
+            <Picker.Item label="Other" value="Other" />
+          </Picker>
+        </View>
+        <Warnin value={age}/>
       </View>
 
-      {/* Height */}
-      <View>
-        <Text style={styles.settingsTitle}>{height ? `Height: ${height}` : 'Select your height'}</Text>
-        <TextInput
-          onChangeText={setHeight}
-          value={height}
-          placeholder="Select your height (cm)"
-          keyboardType="numeric"
-          maxLength={3}
-        />
+      {/* HEIGHT */}
+      <View style={styles.flexCenter}>
+        <View style={styles.flexRowCenter}>
+          <Text style={styles.settingsTitle}>Your height :</Text>
+          <TextInput
+            value={height}
+            onChangeText={setHeight}
+            placeholder="Select your height (cm)"
+            keyboardType="numeric"
+            maxLength={3}
+          />
+        </View>
+        <Warnin value={age}/>
       </View>
     </View>
   )

@@ -1,6 +1,7 @@
 
 const styles = {
   flexCenter: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  flexRowCenter: { display: 'flex', justifyContent: 'center', flexDirection: 'row', gap: 6 },
   settingsTitle: { fontSize: 18 },
   colors: {
     TextColor: '#0c030a',
