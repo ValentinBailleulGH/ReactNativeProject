@@ -1,13 +1,32 @@
 import { View, FlatList } from 'react-native'
-import { Text, Searchbar, Card, List } from 'react-native-paper'
+import { Text, Searchbar, Card, List, IconButton } from 'react-native-paper'
 import React from 'react'
 
 import MainView from '../components/MainView'
 import FoodApiService from '../services/FoodApiService'
 
+const mealToPlanReducer = (state, action) => {
+  switch (action.type) {
+    case 'addMealToPlan': {
+      return {
+        name: state.name,
+        age: state.age + 1
+      }
+    }
+    case 'removeMealToPlan': {
+      return {
+        name: action.nextName,
+        age: state.age
+      }
+    }
+  }
+  throw Error('Unknown action: ' + action.type)
+}
+
 export default function FoodDatabaseScreen ({ route }) {
   const [foodNameToSearch, setFoodNameToSearch] = React.useState('')
   const [hintResults, setHintsResults] = React.useState([])
+  const [mealToPlan, dispatchMealToPlan] = React.useReducer(mealToPlanReducer, { breakfast: [], lunch: [], snack: [], dinner: [] })
 
   const handlePressSearchFoodIcon = () => {
     if (!foodNameToSearch) {
@@ -23,7 +42,7 @@ export default function FoodDatabaseScreen ({ route }) {
       })
   }
 
-  const renderFood = ({ label: foodLabel, nutrients: foodNutrients }) => {
+  const renderFood = ({ foodId, label: foodLabel, nutrients: foodNutrients }) => {
     const LABELS_NUTRIMENTS = [
       'Calories/Energie',
       'Protéines',
@@ -45,6 +64,12 @@ export default function FoodDatabaseScreen ({ route }) {
             )
           })}
         </Card.Content>
+        <Card.Actions>
+          <IconButton
+            icon="plus"
+            onPress={() => console.log('')}
+          />
+        </Card.Actions>
       </Card>
     )
   }
@@ -57,16 +82,15 @@ export default function FoodDatabaseScreen ({ route }) {
           <Searchbar
             label="Chercher un aliment"
             value={foodNameToSearch}
-            onChangeText={(newFoodNameToSearch) =>
-              setFoodNameToSearch(newFoodNameToSearch)
-            }
+            onChangeText={setFoodNameToSearch}
+            onSubmitEditing={handlePressSearchFoodIcon}
             onIconPress={handlePressSearchFoodIcon}
           />
           <FlatList
-              data={hintResults}
-              renderItem={({ item: { food } }) => renderFood(food)}
-              keyExtractor={({ food }) => `${food.foodId}-${food.label}` }
-            />
+            data={hintResults}
+            renderItem={({ item: { food } }) => renderFood(food)}
+            keyExtractor={({ food }) => `${food.foodId}-${food.label}`}
+          />
         </View>
       </View>
     </MainView>
