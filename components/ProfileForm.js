@@ -20,7 +20,6 @@ export default function ProfileForm () {
       paddingTop: 32,
       minHeight: '100%',
       gap: 32
-      // backgroundColor: styles.colors.BackgroundColor
     }}>
 
       {/* AGE */}
@@ -33,7 +32,7 @@ export default function ProfileForm () {
           keyboardType="numeric"
           maxLength={2}
         />
-        {/* <EmptyFieldWarning value={age} /> */}
+        {!age ? <Text style={styles.errorText}>This field cannot be empty</Text> : null}
       </View>
 
       {/* GENDER */}
