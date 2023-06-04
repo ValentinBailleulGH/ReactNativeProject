@@ -3,6 +3,8 @@ const styles = {
   flexCenter: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
   flexRowCenter: { display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row', gap: 6 },
   settingsTitle: { fontSize: 18 },
+  profileTextAnswer: { fontSize: 20, color: 'black' },
+  profilePlaceholderText: { fontSize: 18, color: 'gray', fontStyle: 'italic' },
   colors: {
     TextColor: '#0c030a',
     BackgroundColor: '#faebf7',

@@ -33,9 +33,10 @@ export default function ProfileForm () {
           <TextInput
             value={age}
             onChangeText={setAge}
-            placeholder="Select your age"
+            placeholder="-"
             keyboardType="numeric"
             maxLength={2}
+            style={ age ? styles.profileTextAnswer : styles.profilePlaceholderText }
           />
         </View>
         {age ? null : <DisplayEmptyWarning />}
@@ -76,9 +77,10 @@ export default function ProfileForm () {
           <TextInput
             value={height}
             onChangeText={setHeight}
-            placeholder="Select your height (cm)"
+            placeholder="in cm"
             keyboardType="numeric"
             maxLength={3}
+            style={ height ? styles.profileTextAnswer : styles.profilePlaceholderText }
           />
         </View>
         {height ? null : <DisplayEmptyWarning />}
@@ -91,9 +93,10 @@ export default function ProfileForm () {
           <TextInput
             value={weight}
             onChangeText={setWeight}
-            placeholder="Select your weight (kg)"
+            placeholder="in kg"
             keyboardType="numeric"
             maxLength={3}
+            style={ weight ? styles.profileTextAnswer : styles.profilePlaceholderText }
           />
         </View>
         {weight ? null : <DisplayEmptyWarning />}
