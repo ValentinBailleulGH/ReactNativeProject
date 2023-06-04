@@ -69,14 +69,14 @@ const adjustBMRWithWeightGoal = (BMR, goal) => {
 
 const finalCaloriesIntake = (age, gender, height, weight, activity, goal) => {
   try {
-    if (!(age && gender && height && weight && activity && goal)) throw new Error('Le formulaire n\'est pas rempli')
+    if (!(age && gender && height && weight && activity && goal)) throw new Error('Form is not filled out')
     const initialBMR = getBMR(age, gender, height, weight)
     const withActivityBMR = adjustBMRWithActivityLevel(initialBMR, activity)
     const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR, goal)
     const calories = withGoalBMR.toFixed(0).toString()
-    Alert.alert(calories)
+    Alert.alert('Your calories goal', calories + ' calories')
   } catch (e) {
-    console.log(e)
+    Alert.alert('Error', 'Form is not filled out')
   }
 }
 
@@ -236,7 +236,7 @@ export default function ProfileForm () {
           onPress={() => finalCaloriesIntake(age, gender, height, weight, activity, goal)}
         >
         <Text>
-          Machin
+          Display BMR test
         </Text>
       </TouchableOpacity>
       </View>
