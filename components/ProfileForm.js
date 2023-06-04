@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import styles from '../styles'
 
-const Warnin = ({ value }) => {
+const DisplayEmptyWarning = ({ value }) => {
   return !value
     ? <Text style={{ color: styles.colors.ErrorText }}>This field cannot be empty</Text>
     : null
@@ -16,12 +16,6 @@ export default function ProfileForm () {
   const [weight, setWeight] = useState(undefined)
   const [activity, setActivity] = useState(undefined)
   const [goal, setGoal] = useState(undefined)
-
-  const handleGenderChoice = (genderChosen) => {
-    gender === genderChosen
-      ? setGender('')
-      : setGender(genderChosen)
-  }
 
   return (
     <View style={{
@@ -44,7 +38,7 @@ export default function ProfileForm () {
             maxLength={2}
           />
         </View>
-        {age ? null : <Warnin />}
+        {age ? null : <DisplayEmptyWarning />}
       </View>
 
       {/* GENDER */}
@@ -53,26 +47,26 @@ export default function ProfileForm () {
         <View style={styles.flexRowCenter}>
           <TouchableOpacity
             style={[styles.icon, { backgroundColor: gender === 'male' ? '#ccc' : '#fff' }]}
-            onPress={() => handleGenderChoice('male')}
+            onPress={() => setGender('male')}
           >
             <Ionicons name="male" size={16} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.icon, { backgroundColor: gender === 'female' ? '#ccc' : '#fff' }]}
-            onPress={() => handleGenderChoice('female')}
+            onPress={() => setGender('female')}
           >
             <Ionicons name="female" size={16} />
           </TouchableOpacity>
 
           <TouchableOpacity
             style={[styles.icon, { backgroundColor: gender === 'other' ? '#ccc' : '#fff' }]}
-            onPress={() => handleGenderChoice('other')}
+            onPress={() => setGender('other')}
           >
             <Ionicons name="body" size={16} />
           </TouchableOpacity>
         </View>
-        {gender ? null : <Warnin />}
+        {gender ? null : <DisplayEmptyWarning />}
       </View>
 
       {/* HEIGHT */}
@@ -87,7 +81,7 @@ export default function ProfileForm () {
             maxLength={3}
           />
         </View>
-        {height ? null : <Warnin />}
+        {height ? null : <DisplayEmptyWarning />}
       </View>
 
       {/* WEIGHT */}
@@ -102,7 +96,7 @@ export default function ProfileForm () {
             maxLength={3}
           />
         </View>
-        {weight ? null : <Warnin />}
+        {weight ? null : <DisplayEmptyWarning />}
       </View>
 
       {/* ACTIVITY */}
@@ -140,7 +134,7 @@ export default function ProfileForm () {
             <Ionicons name="flame" size={16} />
           </TouchableOpacity>
         </View>
-        {activity ? null : <Warnin />}
+        {activity ? null : <DisplayEmptyWarning />}
       </View>
 
       {/* GOAL */}
@@ -148,25 +142,25 @@ export default function ProfileForm () {
         <Text style={styles.settingsTitle}>Your weight change goal :</Text>
         <View style={styles.flexRowCenter}>
           <TouchableOpacity
-            style={[styles.icon, { backgroundColor: goal === '0' ? '#ccc' : '#fff' }]}
+            style={[styles.icon, { backgroundColor: goal === 'down' ? '#ccc' : '#fff' }]}
             onPress={() => setGoal('down')}
           >
             <Ionicons name="trending-down" size={16} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.icon, { backgroundColor: goal === '1' ? '#ccc' : '#fff' }]}
+            style={[styles.icon, { backgroundColor: goal === 'stable' ? '#ccc' : '#fff' }]}
             onPress={() => setGoal('stable')}
           >
             <Ionicons name="reorder-two" size={16} />
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.icon, { backgroundColor: goal === '2' ? '#ccc' : '#fff' }]}
+            style={[styles.icon, { backgroundColor: goal === 'up' ? '#ccc' : '#fff' }]}
             onPress={() => setGoal('up')}
           >
             <Ionicons name="trending-up" size={16} />
           </TouchableOpacity>
         </View>
-        {goal ? null : <Warnin />}
+        {goal ? null : <DisplayEmptyWarning />}
       </View>
     </View>
   )
