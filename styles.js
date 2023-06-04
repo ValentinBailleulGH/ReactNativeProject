@@ -5,6 +5,7 @@ const styles = {
   settingsTitle: { fontSize: 18 },
   profileTextAnswer: { fontSize: 20, color: 'black' },
   profilePlaceholderText: { fontSize: 18, color: 'gray', fontStyle: 'italic' },
+  profileForm: { display: 'flex', alignItems: 'center', paddingVertical: 32, gap: 32 },
   colors: {
     TextColor: '#0c030a',
     BackgroundColor: '#faebf7',

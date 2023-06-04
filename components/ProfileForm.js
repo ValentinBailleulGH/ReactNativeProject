@@ -18,14 +18,7 @@ export default function ProfileForm () {
   const [goal, setGoal] = useState(undefined)
 
   return (
-    <View style={{
-      display: 'flex',
-      alignItems: 'center',
-      paddingTop: 32,
-      minHeight: '100%',
-      gap: 32
-    }}>
-
+    <View style={styles.profileForm}>
       {/* AGE */}
       <View style={styles.flexCenter}>
         <View style={styles.flexRowCenter}>
