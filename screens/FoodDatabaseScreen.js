@@ -14,7 +14,7 @@ import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
 import MealPlanCartModal from '../components/MealPlanCartModal'
 import FoodApiService from '../services/FoodApiService'
 
-export default function FoodDatabaseScreen({ route }) {
+export default function FoodDatabaseScreen ({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
     React.useState(false)
   const [displayMealPlanCartModal, setDisplayMealPlanCartModal] =
@@ -86,6 +86,7 @@ export default function FoodDatabaseScreen({ route }) {
         <Card.Actions>
           <IconButton
             icon="plus"
+            rippleColor={'green'}
             onPress={() => {
               setFoodSelected(food)
               setDisplayMealPlanSelectionModal(true)
@@ -130,6 +131,7 @@ export default function FoodDatabaseScreen({ route }) {
       />
       <FAB
         style={styles.fab}
+        disabled={displayMealPlanSelectionModal}
         icon="cart"
         onPress={() => setDisplayMealPlanCartModal(true)}
       />

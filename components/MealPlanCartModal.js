@@ -1,7 +1,8 @@
 import React from 'react'
 import { Modal, Portal, Button, List } from 'react-native-paper'
+import MealPlanDisplay from './MealPlan'
 
-export default function MealPlanSelectionModal({
+export default function MealPlanSelectionModal ({
   modalIsVisible,
   mealPlan,
   handleDismissMealPlanCartModal
@@ -13,17 +14,7 @@ export default function MealPlanSelectionModal({
         onDismiss={handleDismissMealPlanCartModal}
         contentContainerStyle={{ backgroundColor: 'white', padding: 20 }}
       >
-        <List.AccordionGroup>
-          {mealPlan.map(({ title, data }, index) => {
-            return (
-              <List.Accordion key={title} title={title} id={index + 1}>
-                {data.map(({ label: foodLabel }, index) => (
-                  <List.Item key={`${foodLabel}-${index}`} title={foodLabel} />
-                ))}
-              </List.Accordion>
-            )
-          })}
-        </List.AccordionGroup>
+        <MealPlanDisplay mealPlan={mealPlan} />
         <Button onPress={() => handleDismissMealPlanCartModal()}>Fermer</Button>
       </Modal>
     </Portal>

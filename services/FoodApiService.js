@@ -26,8 +26,6 @@ export default {
       urlParamsFormated.length > 0 ? urlParamsFormated.join('') : ''
     }`
 
-    console.log(URL)
-
     return fetch(URL, {
       method,
       headers: HEADERS,
