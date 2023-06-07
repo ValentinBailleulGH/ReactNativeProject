@@ -98,7 +98,9 @@ export default function FoodDatabaseScreen ({ route }) {
   return (
     <MainView>
       <View>
-        <Text variant="displaySmall">Rechercher un aliment</Text>
+        <View style={styles.titleBox}>
+          <Text style={styles.title}>Rechercher un aliment</Text>
+        </View>
         <View>
           <Searchbar
             label="Chercher un aliment"
@@ -143,5 +145,14 @@ const styles = StyleSheet.create({
     margin: 16,
     right: 0,
     bottom: 0
+  },
+  titleBox: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  title: {
+    fontSize: 20,
+    marginVertical: 10
   }
 })
