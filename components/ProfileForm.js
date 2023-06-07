@@ -95,8 +95,7 @@ export default function ProfileForm () {
     if (!age) {
       Alert.alert(title, 'Please select your age.')
       setAge(null)
-    }
-    if (age < minAge) {
+    } else if (age < minAge) {
       Alert.alert(title, `Please select an age above ${minAge}`)
       setAge(null)
     }
@@ -110,8 +109,7 @@ export default function ProfileForm () {
     if (!height) {
       Alert.alert(title, 'Please select your height')
       setHeight(null)
-    }
-    if (height < minHeight || height > maxHeight) {
+    } else if (height < minHeight || height > maxHeight) {
       Alert.alert(title, `Please select an height between ${minHeight} and ${maxHeight}`)
       setHeight(null)
     }
@@ -125,8 +123,7 @@ export default function ProfileForm () {
     if (!weight) {
       Alert.alert(title, 'Please select your weight')
       setWeight(null)
-    }
-    if (weight < minWeight || weight > maxWeight) {
+    } else if (weight < minWeight || weight > maxWeight) {
       Alert.alert(title, `Please select an weight between ${minWeight} and ${maxWeight}`)
       setWeight(null)
     }
