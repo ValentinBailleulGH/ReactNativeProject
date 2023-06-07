@@ -15,11 +15,21 @@ export default function MealPlanSelectionModal ({
         contentContainerStyle={{ backgroundColor: 'white', padding: 20 }}
       >
         <List.AccordionGroup>
-          {Object.entries(mealPlan.data).map(([meal, values]) => {
-            console.log(mealPlan)
+          {mealPlan.map((dailyMealPlan) => {
+            console.log(dailyMealPlan)
+
             return (
-              <List.Accordion id={meal} key={meal} title={meal}>
-                {/* <MealPlan mealPlan={values} /> */}
+              <List.Accordion
+                id={dailyMealPlan.title}
+                key={dailyMealPlan.title}
+                title={dailyMealPlan.title}
+              >
+                <MealPlan
+                  mealPlan={Object.entries(dailyMealPlan.data).map(([key, value]) => ({
+                    title: key,
+                    data: [...value]
+                  }))}
+                />
               </List.Accordion>
             )
           })}
