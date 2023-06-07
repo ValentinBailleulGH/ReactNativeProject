@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Modal, Portal, Button } from 'react-native-paper'
-import { Picker } from '@react-native-picker/picker'
+import { Modal, Portal, Button, RadioButton } from 'react-native-paper'
 
-export default function MealPlanSelectionModal({
+export default function MealPlanSelectionModal ({
   modalIsVisible,
   handleConfirmSelectMealPlan,
   handleAbortSelectMealPlan
@@ -17,16 +16,17 @@ export default function MealPlanSelectionModal({
         onDismiss={handleAbortSelectMealPlan}
         contentContainerStyle={{ backgroundColor: 'white', padding: 20 }}
       >
-        <Picker
-          selectedValue={selectedMealPlan}
-          onValueChange={(itemValue, itemIndex) =>
-            setSelectedMealPlan(itemValue)
-          }
+        <RadioButton.Group
+          value={selectedMealPlan}
+          onValueChange={(value) => setSelectedMealPlan(value)}
         >
-          {MEAL_PLAN_LABELS.map((value) => {
-            return <Picker.Item key={value} label={value} value={value} />
-          })}
-        </Picker>
+          {
+            MEAL_PLAN_LABELS.map((value, key) =>
+              <RadioButton.Item label={value} value={value} key={key} />
+            )
+          }
+        </RadioButton.Group>
+
         <Button onPress={() => handleConfirmSelectMealPlan(selectedMealPlan)}>
           Confirm
         </Button>
