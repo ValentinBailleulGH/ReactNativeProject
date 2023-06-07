@@ -1,8 +1,16 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
-import { Modal, Portal, Button, RadioButton, Chip } from 'react-native-paper'
+import { View, Text } from 'react-native'
+import { Modal, Portal, Button, Chip } from 'react-native-paper'
 
-import styles from '../styles'
+const SectionTitle = ({ title }) => {
+  return (
+    <View style={_styles.modalTitleView}>
+      <Text style={_styles.modalTitle}>
+        {title}
+      </Text>
+    </View>
+  )
+}
 
 export default function MealPlanSelectionModal ({
   modalIsVisible,
@@ -22,28 +30,37 @@ export default function MealPlanSelectionModal ({
         onDismiss={handleAbortSelectMealPlan}
         contentContainerStyle={{ backgroundColor: 'white', padding: 20, marginHorizontal: 20 }}
       >
-        <View style={{ display: 'flex', flexDirection: 'row' }}>
-          <RadioButton.Group
-            value={selectedDay}
-            onValueChange={(value) => setSelectedDay(value)}
-          >
+        <View style={{ display: 'flex', justifyContent: 'center', flexDirection: 'row', gap: 20, marginBottom: 10 }}>
+          <View style={{ gap: 6 }}>
+            <SectionTitle title="Day" />
             {
-              DAYS_LABEL.map((value, key) =>
-                <RadioButton.Item label={value} value={value} key={key} />
+              DAYS_LABEL.map((myDay, key) =>
+                <Chip
+                  selected={selectedDay === myDay}
+                  onPress={() => setSelectedDay(myDay)}
+                  showSelectedOverlay={true}
+                  key={key}
+                >
+                  {myDay}
+                </Chip>
               )
             }
-          </RadioButton.Group>
-
-          <RadioButton.Group
-            value={selectedMealPlan}
-            onValueChange={(value) => setSelectedMealPlan(value)}
-          >
+          </View>
+          <View style={{ gap: 6 }}>
+            <SectionTitle title="Meal" />
             {
-              MEAL_PLAN_LABELS.map((value, key) =>
-                <RadioButton.Item label={value} value={value} key={key} />
+              MEAL_PLAN_LABELS.map((myMeal, key) =>
+                <Chip
+                  selected={selectedMealPlan === myMeal}
+                  onPress={() => setSelectedMealPlan(myMeal)}
+                  showSelectedOverlay={true}
+                  key={key}
+                >
+                  {myMeal}
+                </Chip>
               )
             }
-          </RadioButton.Group>
+          </View>
         </View>
 
         <Button onPress={() => handleConfirmSelectMealPlan(selectedMealPlan)}>
@@ -52,4 +69,15 @@ export default function MealPlanSelectionModal ({
       </Modal>
     </Portal>
   )
+}
+
+const _styles = {
+  modalTitleView: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modalTitle: {
+    fontSize: 20
+  }
 }
