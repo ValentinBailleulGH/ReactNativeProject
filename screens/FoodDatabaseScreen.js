@@ -13,6 +13,7 @@ import MainView from '../components/MainView'
 import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
 import MealPlanCartModal from '../components/MealPlanCartModal'
 import FoodApiService from '../services/FoodApiService'
+import { MealPlanContext } from '../services/MealPlanContext'
 
 export default function FoodDatabaseScreen ({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
@@ -22,12 +23,7 @@ export default function FoodDatabaseScreen ({ route }) {
   const [foodSelected, setFoodSelected] = React.useState('')
   const [foodNameToSearch, setFoodNameToSearch] = React.useState('')
   const [hintResults, setHintsResults] = React.useState([])
-  const [mealToPlan, setMealToPlan] = React.useState({
-    Breakfast: [],
-    Lunch: [],
-    Dinner: [],
-    Snack: []
-  })
+  const { mealToPlan, setMealToPlan } = React.useContext(MealPlanContext)
 
   const handlePressSearchFoodIcon = () => {
     if (!foodNameToSearch) {

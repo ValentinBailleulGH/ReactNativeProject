@@ -1,6 +1,6 @@
 import React from 'react'
-import { Modal, Portal, Button, List } from 'react-native-paper'
-import MealPlanDisplay from './MealPlan'
+import { Modal, Portal, Button } from 'react-native-paper'
+import MealPlan from './MealPlan'
 
 export default function MealPlanSelectionModal ({
   modalIsVisible,
@@ -14,7 +14,7 @@ export default function MealPlanSelectionModal ({
         onDismiss={handleDismissMealPlanCartModal}
         contentContainerStyle={{ backgroundColor: 'white', padding: 20 }}
       >
-        <MealPlanDisplay mealPlan={mealPlan} />
+        <MealPlan mealPlan={mealPlan} />
         <Button onPress={() => handleDismissMealPlanCartModal()}>Fermer</Button>
       </Modal>
     </Portal>
