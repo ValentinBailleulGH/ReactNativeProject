@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import {
   Text,
@@ -9,7 +9,7 @@ import MainView from '../components/MainView'
 
 export default function MealPlanningScreen () {
   const days = ['Monday', 'Tuesday', 'Wenesday', 'Thursday', 'Friday']
-  const [daySelected, setDaySelected] = React.useState(days[0])
+  const [daySelected, setDaySelected] = useState(days[0])
 
   return (
       <MainView>

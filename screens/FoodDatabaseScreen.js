@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
 import {
   Text,
@@ -15,14 +15,12 @@ import MealPlanCartModal from '../components/MealPlanCartModal'
 import FoodApiService from '../services/FoodApiService'
 
 export default function FoodDatabaseScreen ({ route }) {
-  const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
-    React.useState(false)
-  const [displayMealPlanCartModal, setDisplayMealPlanCartModal] =
-    React.useState(false)
-  const [foodSelected, setFoodSelected] = React.useState('')
-  const [foodNameToSearch, setFoodNameToSearch] = React.useState('')
-  const [hintResults, setHintsResults] = React.useState([])
-  const [mealToPlan, setMealToPlan] = React.useState({
+  const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] = useState(false)
+  const [displayMealPlanCartModal, setDisplayMealPlanCartModal] = useState(false)
+  const [foodSelected, setFoodSelected] = useState('')
+  const [foodNameToSearch, setFoodNameToSearch] = useState('')
+  const [hintResults, setHintsResults] = useState([])
+  const [mealToPlan, setMealToPlan] = useState({
     Breakfast: [],
     Lunch: [],
     Dinner: [],
