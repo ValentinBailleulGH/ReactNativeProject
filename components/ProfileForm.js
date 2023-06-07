@@ -142,7 +142,7 @@ export default function ProfileForm () {
               placeholder="-"
               keyboardType="numeric"
               maxLength={2}
-              onSubmitEditing={onAgeSubmit}
+              onEndEditing={onAgeSubmit}
               style={ age ? styles.profileTextAnswer : styles.profilePlaceholderText }
             />
           </View>
@@ -187,7 +187,7 @@ export default function ProfileForm () {
               placeholder="in cm"
               keyboardType="numeric"
               maxLength={3}
-              onSubmitEditing={onHeightSubmit}
+              onEndEditing={onHeightSubmit}
               style={ height ? styles.profileTextAnswer : styles.profilePlaceholderText }
             />
           </View>
@@ -204,7 +204,7 @@ export default function ProfileForm () {
               placeholder="in kg"
               keyboardType="numeric"
               maxLength={3}
-              onSubmitEditing={onWeightSubmit}
+              onEndEditing={onWeightSubmit}
               style={ weight ? styles.profileTextAnswer : styles.profilePlaceholderText }
             />
           </View>
@@ -279,10 +279,10 @@ export default function ProfileForm () {
         <TouchableOpacity
           onPress={() => finalCaloriesIntake(age, gender, height, weight, activity, goal)}
         >
-        <Text>
-          Display BMR test
-        </Text>
-      </TouchableOpacity>
+          <Text>
+            Display BMR test
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   )
