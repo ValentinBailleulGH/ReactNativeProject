@@ -88,6 +88,50 @@ export default function ProfileForm () {
   const [activity, setActivity] = useState(undefined)
   const [goal, setGoal] = useState(undefined)
 
+  const onAgeSubmit = () => {
+    const title = 'Your age'
+    const minAge = 10
+
+    if (!age) {
+      Alert.alert(title, 'Please select your age.')
+      setAge(null)
+    }
+    if (age < minAge) {
+      Alert.alert(title, `Please select an age above ${minAge}`)
+      setAge(null)
+    }
+  }
+
+  const onHeightSubmit = () => {
+    const title = 'Your height'
+    const minHeight = 50
+    const maxHeight = 220
+
+    if (!height) {
+      Alert.alert(title, 'Please select your height')
+      setHeight(null)
+    }
+    if (height < minHeight || height > maxHeight) {
+      Alert.alert(title, `Please select an height between ${minHeight} and ${maxHeight}`)
+      setHeight(null)
+    }
+  }
+
+  const onWeightSubmit = () => {
+    const title = 'Your weight'
+    const minWeight = 30
+    const maxWeight = 300
+
+    if (!weight) {
+      Alert.alert(title, 'Please select your weight')
+      setWeight(null)
+    }
+    if (weight < minWeight || weight > maxWeight) {
+      Alert.alert(title, `Please select an weight between ${minWeight} and ${maxWeight}`)
+      setWeight(null)
+    }
+  }
+
   return (
     <View>
       <View style={styles.profileForm}>
@@ -101,6 +145,7 @@ export default function ProfileForm () {
               placeholder="-"
               keyboardType="numeric"
               maxLength={2}
+              onSubmitEditing={onAgeSubmit}
               style={ age ? styles.profileTextAnswer : styles.profilePlaceholderText }
             />
           </View>
@@ -145,6 +190,7 @@ export default function ProfileForm () {
               placeholder="in cm"
               keyboardType="numeric"
               maxLength={3}
+              onSubmitEditing={onHeightSubmit}
               style={ height ? styles.profileTextAnswer : styles.profilePlaceholderText }
             />
           </View>
@@ -161,6 +207,7 @@ export default function ProfileForm () {
               placeholder="in kg"
               keyboardType="numeric"
               maxLength={3}
+              onSubmitEditing={onWeightSubmit}
               style={ weight ? styles.profileTextAnswer : styles.profilePlaceholderText }
             />
           </View>
