@@ -123,7 +123,7 @@ export default function FoodDatabaseScreen ({ route }) {
         modalIsVisible={displayMealPlanCartModal}
         mealPlan={Object.entries(mealToPlan).map(([key, value]) => ({
           title: key,
-          data: [...value]
+          data: { ...value }
         }))}
         handleDismissMealPlanCartModal={handleDismissMealPlanCartModal}
       />
