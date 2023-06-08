@@ -2,7 +2,7 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
-import { Button} from 'react-native-paper'
+import { Button } from 'react-native-paper'
 
 import ThickDivider from '../components/ThickDivider'
 import DisplayWarning from '../components/DisplayWarning'
@@ -27,7 +27,7 @@ const GOAL = {
   UP: '1'
 }
 
-export default function ProfileForm() {
+export default function ProfileForm () {
   const [age, setAge] = useState(undefined)
   const [gender, setGender] = useState(undefined)
   const [height, setHeight] = useState(undefined)
@@ -35,10 +35,14 @@ export default function ProfileForm() {
   const [activity, setActivity] = useState(undefined)
   const [goal, setGoal] = useState(undefined)
   const [BMR, setBMR] = useState(undefined)
+  const [allHooksTruthy, setAllHooksTruthy] = useState(false)
 
   const getBMR = () => {
     // For men: BMR = 88.362 + (13.397 * weight in kg) + (4.799 * height in cm) - (5.677 * age in years)
     // For women: BMR = 447.593 + (9.247 * weight in kg) + (3.098 * height in cm) - (4.330 * age in years)
+    // for other: mean of men and women
+
+    if (!allHooksTruthy) return null
 
     const menBmr = 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age
     if (gender === GENDERS.MALE) return menBmr
@@ -50,6 +54,9 @@ export default function ProfileForm() {
   }
 
   const adjustBMRWithActivityLevel = (BMR) => {
+    if (!allHooksTruthy) return null
+    if (!BMR) return null
+
     switch (activity) {
       case ACTIVITY.SEDENTARY:
         return BMR * 1.2
@@ -64,6 +71,9 @@ export default function ProfileForm() {
     }
   }
   const adjustBMRWithWeightGoal = (BMR) => {
+    if (!allHooksTruthy) return null
+    if (!BMR) return null
+
     switch (goal) {
       case GOAL.DOWN:
         return BMR - 500
@@ -76,8 +86,10 @@ export default function ProfileForm() {
 
   const finalCaloriesIntake = () => {
     try {
-      if (!(age && gender && height && weight && activity && goal))
+      if (!allHooksTruthy) {
         throw new Error('Form is not filled out')
+      }
+
       const initialBMR = getBMR()
       const withActivityBMR = adjustBMRWithActivityLevel(initialBMR)
       const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR)
@@ -89,10 +101,19 @@ export default function ProfileForm() {
   }
 
   useEffect(() => {
+    // Check if any of the hooks are falsy
+    if (!age || !gender || !height || !weight || !activity || !goal) {
+      setAllHooksTruthy(false)
+    } else {
+      setAllHooksTruthy(true)
+    }
+  }, [age, gender, height, weight, activity, goal])
+
+  useEffect(() => {
     // display BMR
     const calories = finalCaloriesIntake()
     setBMR(calories ?? undefined)
-  }, [age, gender, height, weight, activity, goal])
+  }, [allHooksTruthy])
 
   const onAgeSubmit = () => {
     const title = 'Your age'
@@ -118,7 +139,7 @@ export default function ProfileForm() {
     } else if (height < minHeight || height > maxHeight) {
       Alert.alert(
         title,
-        `Please select an height between ${minHeight} and ${maxHeight}`
+        `Please select a height between ${minHeight} and ${maxHeight}`
       )
       setHeight(null)
     }
@@ -135,7 +156,7 @@ export default function ProfileForm() {
     } else if (weight < minWeight || weight > maxWeight) {
       Alert.alert(
         title,
-        `Please select an weight between ${minWeight} and ${maxWeight}`
+        `Please select a weight between ${minWeight} and ${maxWeight}`
       )
       setWeight(null)
     }
@@ -173,9 +194,11 @@ export default function ProfileForm() {
               style={age ? styles.textAnswer : styles.placeholderText}
             />
           </View>
-          {age ? null : (
+          {age
+            ? null
+            : (
             <DisplayWarning warningText="This field cannot be empty" />
-          )}
+              )}
         </View>
 
         {/* GENDER */}
