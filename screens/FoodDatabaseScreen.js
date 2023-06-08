@@ -14,7 +14,7 @@ import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
 import FoodApiService from '../services/FoodApiService'
 import { MealPlanContext } from '../services/MealPlanContext'
 
-export default function FoodDatabaseScreen({ route }) {
+export default function FoodDatabaseScreen ({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
     useState(false)
   const [foodSelected, setFoodSelected] = useState('')
@@ -98,13 +98,14 @@ export default function FoodDatabaseScreen({ route }) {
         <View style={styles.titleBox}>
           <Text style={styles.title}>Rechercher un aliment</Text>
         </View>
-        <View>
+        <View style={{ marginBottom: 20, marginHorizontal: 10, gap: 10 }}>
           <Searchbar
             label="Chercher un aliment"
             value={foodNameToSearch}
             onChangeText={setFoodNameToSearch}
             onSubmitEditing={handlePressSearchFoodIcon}
             onIconPress={handlePressSearchFoodIcon}
+            placeholder='Select your food...'
           />
           <FlatList
             data={hintResults}
