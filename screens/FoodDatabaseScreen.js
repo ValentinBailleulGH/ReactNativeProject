@@ -6,7 +6,8 @@ import {
   Card,
   List,
   IconButton,
-  FAB
+  // FAB,
+  Button
 } from 'react-native-paper'
 
 import MainView from '../components/MainView'
@@ -14,7 +15,7 @@ import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
 import FoodApiService from '../services/FoodApiService'
 import { MealPlanContext } from '../services/MealPlanContext'
 
-export default function FoodDatabaseScreen({ route }) {
+export default function FoodDatabaseScreen ({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
     useState(false)
   const [foodSelected, setFoodSelected] = useState('')
@@ -100,8 +101,22 @@ export default function FoodDatabaseScreen({ route }) {
     <MainView>
       <View>
         <View style={styles.titleBox}>
-          <Text style={styles.title}>Rechercher un aliment</Text>
+          <Text style={styles.title}>
+            Rechercher un aliment
+          </Text>
         </View>
+
+        {/* DEVS ONLY */}
+        <Button
+          onPress={() => {
+            setFoodNameToSearch('Carrot')
+            handlePressSearchFoodIcon()
+          }}
+        >
+          Auto load for developments only
+        </Button>
+        {/* DEVS ONLY */}
+
         <View style={{ marginBottom: 20, marginHorizontal: 10, gap: 10 }}>
           <Searchbar
             label="Chercher un aliment"
