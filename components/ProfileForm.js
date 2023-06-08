@@ -1,11 +1,11 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
-import styles from '../styles'
+import globalStyles from '../styles'
 
 const DisplayEmptyWarning = ({ value }) => {
   return !value
-    ? <Text style={{ color: styles.colors.ErrorText }}>This field cannot be empty</Text>
+    ? <Text style={{ color: globalStyles.colors.ErrorText }}>This field cannot be empty</Text>
     : null
 }
 
@@ -131,11 +131,11 @@ export default function ProfileForm () {
 
   return (
     <View>
-      <View style={styles.profileForm}>
+      <View style={styles.mainView}>
         {/* AGE */}
-        <View style={styles.flexCenter}>
-          <View style={styles.flexRowCenter}>
-            <Text style={styles.settingsTitle}>Your age :</Text>
+        <View style={globalStyles.flexCenter}>
+          <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
+            <Text style={styles.title}>Your age :</Text>
             <TextInput
               value={age}
               onChangeText={setAge}
@@ -143,16 +143,16 @@ export default function ProfileForm () {
               keyboardType="numeric"
               maxLength={2}
               onEndEditing={onAgeSubmit}
-              style={ age ? styles.profileTextAnswer : styles.profilePlaceholderText }
+              style={ age ? styles.textAnswer : styles.placeholderText }
             />
           </View>
           {age ? null : <DisplayEmptyWarning />}
         </View>
 
         {/* GENDER */}
-        <View style={styles.flexCenter}>
-          <Text style={styles.settingsTitle}>Your gender :</Text>
-          <View style={styles.flexRowCenter}>
+        <View style={globalStyles.flexCenter}>
+          <Text style={styles.title}>Your gender :</Text>
+          <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
             <TouchableOpacity
               style={[styles.icon, { backgroundColor: gender === GENDERS.MALE ? '#ccc' : '#fff' }]}
               onPress={() => setGender(GENDERS.MALE)}
@@ -178,9 +178,9 @@ export default function ProfileForm () {
         </View>
 
         {/* HEIGHT */}
-        <View style={styles.flexCenter}>
-          <View style={styles.flexRowCenter}>
-            <Text style={styles.settingsTitle}>Your height :</Text>
+        <View style={globalStyles.flexCenter}>
+          <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
+            <Text style={styles.title}>Your height :</Text>
             <TextInput
               value={height}
               onChangeText={setHeight}
@@ -188,16 +188,16 @@ export default function ProfileForm () {
               keyboardType="numeric"
               maxLength={3}
               onEndEditing={onHeightSubmit}
-              style={ height ? styles.profileTextAnswer : styles.profilePlaceholderText }
+              style={ height ? styles.textAnswer : styles.placeholderText }
             />
           </View>
           {height ? null : <DisplayEmptyWarning />}
         </View>
 
         {/* WEIGHT */}
-        <View style={styles.flexCenter}>
-          <View style={styles.flexRowCenter}>
-            <Text style={styles.settingsTitle}>Your weight :</Text>
+        <View style={globalStyles.flexCenter}>
+          <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
+            <Text style={styles.title}>Your weight :</Text>
             <TextInput
               value={weight}
               onChangeText={setWeight}
@@ -205,16 +205,16 @@ export default function ProfileForm () {
               keyboardType="numeric"
               maxLength={3}
               onEndEditing={onWeightSubmit}
-              style={ weight ? styles.profileTextAnswer : styles.profilePlaceholderText }
+              style={ weight ? styles.textAnswer : styles.placeholderText }
             />
           </View>
           {weight ? null : <DisplayEmptyWarning />}
         </View>
 
         {/* ACTIVITY */}
-        <View style={styles.flexCenter}>
-          <Text style={styles.settingsTitle}>Your activity level :</Text>
-          <View style={styles.flexRowCenter}>
+        <View style={globalStyles.flexCenter}>
+          <Text style={styles.title}>Your activity level :</Text>
+          <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
             <TouchableOpacity
               style={[styles.icon, { backgroundColor: activity === ACTIVITY.SEDENTARY ? '#ccc' : '#fff' }]}
               onPress={() => setActivity(ACTIVITY.SEDENTARY)}
@@ -250,9 +250,9 @@ export default function ProfileForm () {
         </View>
 
         {/* GOAL */}
-        <View style={styles.flexCenter}>
-          <Text style={styles.settingsTitle}>Your weight change goal :</Text>
-          <View style={styles.flexRowCenter}>
+        <View style={globalStyles.flexCenter}>
+          <Text style={styles.title}>Your weight change goal :</Text>
+          <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
             <TouchableOpacity
               style={[styles.icon, { backgroundColor: goal === GOAL.DOWN ? '#ccc' : '#fff' }]}
               onPress={() => setGoal(GOAL.DOWN)}
@@ -286,4 +286,17 @@ export default function ProfileForm () {
       </View>
     </View>
   )
+}
+
+const styles = {
+  title: { fontSize: 18 },
+  textAnswer: { fontSize: 20, color: 'black' },
+  placeholderText: { fontSize: 18, color: 'gray', fontStyle: 'italic' },
+  mainView: { display: 'flex', alignItems: 'center', paddingVertical: 32, gap: 32 },
+  icon: {
+    borderWidth: 1,
+    borderColor: 'rgba(0, 0, 0, 0.2)',
+    padding: 10,
+    borderRadius: 20
+  }
 }
