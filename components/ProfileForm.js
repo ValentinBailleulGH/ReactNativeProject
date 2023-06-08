@@ -41,7 +41,7 @@ export default function ProfileForm () {
   const [goal, setGoal] = useState(undefined)
   const [BMR, setBMR] = useState(undefined)
 
-  const getBMR = (age, gender, height, weight) => {
+  const getBMR = () => {
   // For men: BMR = 88.362 + (13.397 * weight in kg) + (4.799 * height in cm) - (5.677 * age in years)
   // For women: BMR = 447.593 + (9.247 * weight in kg) + (3.098 * height in cm) - (4.330 * age in years)
 
@@ -82,11 +82,11 @@ export default function ProfileForm () {
   const finalCaloriesIntake = () => {
     try {
       if (!(age && gender && height && weight && activity && goal)) throw new Error('Form is not filled out')
-      const initialBMR = getBMR(age, gender, height, weight)
+      const initialBMR = getBMR()
       const withActivityBMR = adjustBMRWithActivityLevel(initialBMR)
       const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR)
-      const calories = withGoalBMR.toFixed(0).toString()
-      return calories
+      const finalCalories = withGoalBMR.toFixed(0).toString()
+      return finalCalories
     } catch (e) {
       return undefined
     }
@@ -301,7 +301,9 @@ export default function ProfileForm () {
           {goal ? null : <DisplayEmptyWarning />}
         </View>
       </View>
+
       <ThickDivider />
+
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 40 }}>
         <Text style={styles.title}>
           {
