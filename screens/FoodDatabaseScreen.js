@@ -1,29 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
-import {
-  Text,
-  Searchbar,
-  Card,
-  List,
-  IconButton,
-  FAB
-} from 'react-native-paper'
+import { Text, Searchbar, Card, List, IconButton, FAB } from 'react-native-paper'
 
 import MainView from '../components/MainView'
 import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
-import MealPlanCartModal from '../components/MealPlanCartModal'
 import FoodApiService from '../services/FoodApiService'
 import { MealPlanContext } from '../services/MealPlanContext'
 
-export default function FoodDatabaseScreen ({ route }) {
+export default function FoodDatabaseScreen({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
-    React.useState(false)
-  const [displayMealPlanCartModal, setDisplayMealPlanCartModal] =
-    React.useState(false)
-  const [foodSelected, setFoodSelected] = React.useState('')
-  const [foodNameToSearch, setFoodNameToSearch] = React.useState('')
-  const [hintResults, setHintsResults] = React.useState([])
-  const { mealToPlan, setMealToPlan } = React.useContext(MealPlanContext)
+    useState(false)
+  const [foodSelected, setFoodSelected] = useState('')
+  const [foodNameToSearch, setFoodNameToSearch] = useState('')
+  const [hintResults, setHintsResults] = useState([])
+  const { mealToPlan, setMealToPlan } = useContext(MealPlanContext)
 
   const handlePressSearchFoodIcon = () => {
     if (!foodNameToSearch) {
@@ -39,20 +29,22 @@ export default function FoodDatabaseScreen ({ route }) {
       })
   }
 
-  const handleConfirmSelectMealPlan = (selectedMealPlan) => {
+  const handleConfirmSelectMealPlan = (selectedMealPlan, selectedDay) => {
     setMealToPlan({
       ...mealToPlan,
-      [selectedMealPlan]: [...mealToPlan[selectedMealPlan], foodSelected]
+      [selectedDay]: {
+        ...mealToPlan[selectedDay],
+        [selectedMealPlan]: [
+          ...mealToPlan[selectedDay][selectedMealPlan],
+          foodSelected
+        ]
+      }
     })
     handleAbortSelectMealPlan()
   }
 
   const handleAbortSelectMealPlan = () => {
     setDisplayMealPlanSelectionModal(false)
-  }
-
-  const handleDismissMealPlanCartModal = () => {
-    setDisplayMealPlanCartModal(false)
   }
 
   const renderFood = (food) => {
@@ -118,20 +110,6 @@ export default function FoodDatabaseScreen ({ route }) {
         modalIsVisible={displayMealPlanSelectionModal}
         handleConfirmSelectMealPlan={handleConfirmSelectMealPlan}
         handleAbortSelectMealPlan={handleAbortSelectMealPlan}
-      />
-      <MealPlanCartModal
-        modalIsVisible={displayMealPlanCartModal}
-        mealPlan={Object.entries(mealToPlan).map(([key, value]) => ({
-          title: key,
-          data: { ...value }
-        }))}
-        handleDismissMealPlanCartModal={handleDismissMealPlanCartModal}
-      />
-      <FAB
-        style={styles.fab}
-        disabled={displayMealPlanSelectionModal}
-        icon="cart"
-        onPress={() => setDisplayMealPlanCartModal(true)}
       />
     </MainView>
   )

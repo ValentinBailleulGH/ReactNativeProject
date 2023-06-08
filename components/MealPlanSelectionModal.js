@@ -63,7 +63,7 @@ export default function MealPlanSelectionModal ({
           </View>
         </View>
 
-        <Button onPress={() => handleConfirmSelectMealPlan(selectedMealPlan)}>
+        <Button onPress={() => handleConfirmSelectMealPlan(selectedMealPlan, selectedDay)}>
           Confirm
         </Button>
       </Modal>
