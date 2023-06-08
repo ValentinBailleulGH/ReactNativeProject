@@ -37,6 +37,21 @@ export default function ProfileForm () {
   const [BMR, setBMR] = useState(undefined)
   const [allHooksTruthy, setAllHooksTruthy] = useState(false)
 
+  useEffect(() => {
+    // Check if any of the hooks are falsy
+    if (!age || !gender || !height || !weight || !activity || !goal) {
+      setAllHooksTruthy(false)
+    } else {
+      setAllHooksTruthy(true)
+    }
+  }, [age, gender, height, weight, activity, goal])
+
+  useEffect(() => {
+    // display BMR
+    const calories = finalCaloriesIntake()
+    setBMR(calories ?? undefined)
+  }, [age, gender, height, weight, activity, goal])
+
   const getBMR = () => {
     // For men: BMR = 88.362 + (13.397 * weight in kg) + (4.799 * height in cm) - (5.677 * age in years)
     // For women: BMR = 447.593 + (9.247 * weight in kg) + (3.098 * height in cm) - (4.330 * age in years)
@@ -70,6 +85,7 @@ export default function ProfileForm () {
         return BMR * 1.9
     }
   }
+
   const adjustBMRWithWeightGoal = (BMR) => {
     if (!allHooksTruthy) return null
     if (!BMR) return null
@@ -99,21 +115,6 @@ export default function ProfileForm () {
       return undefined
     }
   }
-
-  useEffect(() => {
-    // Check if any of the hooks are falsy
-    if (!age || !gender || !height || !weight || !activity || !goal) {
-      setAllHooksTruthy(false)
-    } else {
-      setAllHooksTruthy(true)
-    }
-  }, [age, gender, height, weight, activity, goal])
-
-  useEffect(() => {
-    // display BMR
-    const calories = finalCaloriesIntake()
-    setBMR(calories ?? undefined)
-  }, [age, gender, height, weight, activity, goal])
 
   const onAgeSubmit = () => {
     const title = 'Your age'
