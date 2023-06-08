@@ -14,7 +14,7 @@ import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
 import FoodApiService from '../services/FoodApiService'
 import { MealPlanContext } from '../services/MealPlanContext'
 
-export default function FoodDatabaseScreen ({ route }) {
+export default function FoodDatabaseScreen({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
     useState(false)
   const [foodSelected, setFoodSelected] = useState('')
@@ -36,14 +36,18 @@ export default function FoodDatabaseScreen ({ route }) {
       })
   }
 
-  const handleConfirmSelectMealPlan = (selectedMealPlan, selectedDay) => {
+  const handleConfirmSelectMealPlan = (
+    selectedMealPlan,
+    selectedDay,
+    quantity
+  ) => {
     setMealToPlan({
       ...mealToPlan,
       [selectedDay]: {
         ...mealToPlan[selectedDay],
         [selectedMealPlan]: [
           ...mealToPlan[selectedDay][selectedMealPlan],
-          foodSelected
+          { ...foodSelected, quantity }
         ]
       }
     })
@@ -105,7 +109,7 @@ export default function FoodDatabaseScreen ({ route }) {
             onChangeText={setFoodNameToSearch}
             onSubmitEditing={handlePressSearchFoodIcon}
             onIconPress={handlePressSearchFoodIcon}
-            placeholder='Select your food...'
+            placeholder="Select your food..."
           />
           <FlatList
             data={hintResults}

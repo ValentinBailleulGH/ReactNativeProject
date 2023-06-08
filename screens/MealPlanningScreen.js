@@ -69,9 +69,10 @@ export default function MealPlanningScreen({ navigation }) {
     for (const mealPlan in mealToPlan[currentDay]) {
       const foods = mealToPlan[currentDay][mealPlan]
       for (const food of foods) {
-        const { nutrients: foodNutrients } = food
+        const { nutrients: foodNutrients, quantity } = food
         for (const nutrimentKey in foodNutrients) {
           const nutrimentValue = foodNutrients[nutrimentKey]
+          //const nutrimentValueByQuantity = (nutrimentValue * quantity) / 1000
           dailySumCalories += nutrimentValue
         }
       }
