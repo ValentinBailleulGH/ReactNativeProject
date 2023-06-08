@@ -113,7 +113,7 @@ export default function ProfileForm () {
     // display BMR
     const calories = finalCaloriesIntake()
     setBMR(calories ?? undefined)
-  }, [allHooksTruthy])
+  }, [age, gender, height, weight, activity, goal])
 
   const onAgeSubmit = () => {
     const title = 'Your age'
