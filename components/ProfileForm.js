@@ -1,7 +1,10 @@
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
+import { Button } from 'react-native-paper'
+
+import ThickDivider from '../components/ThickDivider'
 
 const DisplayEmptyWarning = ({ value }) => {
   return !value
@@ -29,57 +32,6 @@ const GOAL = {
   UP: '1'
 }
 
-const getBMR = (age, gender, height, weight) => {
-  // For men: BMR = 88.362 + (13.397 * weight in kg) + (4.799 * height in cm) - (5.677 * age in years)
-  // For women: BMR = 447.593 + (9.247 * weight in kg) + (3.098 * height in cm) - (4.330 * age in years)
-
-  const menBmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
-  if (gender === GENDERS.MALE) return menBmr
-
-  const womenBmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
-  if (gender === GENDERS.FEMALE) return womenBmr
-
-  return (menBmr + womenBmr) / 2
-}
-
-const adjustBMRWithActivityLevel = (BMR, activity) => {
-  switch (activity) {
-    case ACTIVITY.SEDENTARY:
-      return BMR * 1.2
-    case ACTIVITY.LIGHTLY_ACTIVE:
-      return BMR * 1.375
-    case ACTIVITY.MODERATELY_ACTIVE:
-      return BMR * 1.55
-    case ACTIVITY.VERYACTIVE:
-      return BMR * 1.725
-    case ACTIVITY.SUPER_ACTIVE:
-      return BMR * 1.9
-  }
-}
-const adjustBMRWithWeightGoal = (BMR, goal) => {
-  switch (goal) {
-    case GOAL.DOWN:
-      return BMR - 500
-    case GOAL.UP:
-      return BMR + 500
-    default:
-      return BMR
-  }
-}
-
-const finalCaloriesIntake = (age, gender, height, weight, activity, goal) => {
-  try {
-    if (!(age && gender && height && weight && activity && goal)) throw new Error('Form is not filled out')
-    const initialBMR = getBMR(age, gender, height, weight)
-    const withActivityBMR = adjustBMRWithActivityLevel(initialBMR, activity)
-    const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR, goal)
-    const calories = withGoalBMR.toFixed(0).toString()
-    Alert.alert('Your calories goal', calories + ' calories')
-  } catch (e) {
-    Alert.alert('Error', 'Form is not filled out')
-  }
-}
-
 export default function ProfileForm () {
   const [age, setAge] = useState(undefined)
   const [gender, setGender] = useState(undefined)
@@ -87,6 +39,66 @@ export default function ProfileForm () {
   const [weight, setWeight] = useState(undefined)
   const [activity, setActivity] = useState(undefined)
   const [goal, setGoal] = useState(undefined)
+  const [BMR, setBMR] = useState(undefined)
+
+  const getBMR = (age, gender, height, weight) => {
+  // For men: BMR = 88.362 + (13.397 * weight in kg) + (4.799 * height in cm) - (5.677 * age in years)
+  // For women: BMR = 447.593 + (9.247 * weight in kg) + (3.098 * height in cm) - (4.330 * age in years)
+
+    const menBmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
+    if (gender === GENDERS.MALE) return menBmr
+
+    const womenBmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
+    if (gender === GENDERS.FEMALE) return womenBmr
+
+    return (menBmr + womenBmr) / 2
+  }
+
+  const adjustBMRWithActivityLevel = (BMR) => {
+    switch (activity) {
+      case ACTIVITY.SEDENTARY:
+        return BMR * 1.2
+      case ACTIVITY.LIGHTLY_ACTIVE:
+        return BMR * 1.375
+      case ACTIVITY.MODERATELY_ACTIVE:
+        return BMR * 1.55
+      case ACTIVITY.VERYACTIVE:
+        return BMR * 1.725
+      case ACTIVITY.SUPER_ACTIVE:
+        return BMR * 1.9
+    }
+  }
+  const adjustBMRWithWeightGoal = (BMR) => {
+    switch (goal) {
+      case GOAL.DOWN:
+        return BMR - 500
+      case GOAL.UP:
+        return BMR + 500
+      default:
+        return BMR
+    }
+  }
+
+  const finalCaloriesIntake = () => {
+    try {
+      if (!(age && gender && height && weight && activity && goal)) throw new Error('Form is not filled out')
+      const initialBMR = getBMR(age, gender, height, weight)
+      const withActivityBMR = adjustBMRWithActivityLevel(initialBMR)
+      const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR)
+      const calories = withGoalBMR.toFixed(0).toString()
+      return calories
+    } catch (e) {
+      return undefined
+    }
+  }
+
+  useEffect(
+    () => { // display BMR
+      const calories = finalCaloriesIntake()
+      setBMR(calories ?? undefined)
+    },
+    [age, gender, height, weight, activity, goal]
+  )
 
   const onAgeSubmit = () => {
     const title = 'Your age'
@@ -131,6 +143,20 @@ export default function ProfileForm () {
 
   return (
     <View>
+
+      {/* DEVS ONLY */}
+      <Button onPress={() => {
+        setAge('20')
+        setGender(GENDERS.MALE)
+        setHeight('180')
+        setWeight('74')
+        setActivity(ACTIVITY.MODERATELY_ACTIVE)
+        setGoal(GOAL.EQUAL)
+      }}>
+        Auto load for developments only
+      </Button>
+      {/* DEVS ONLY */}
+
       <View style={styles.mainView}>
         {/* AGE */}
         <View style={globalStyles.flexCenter}>
@@ -275,14 +301,15 @@ export default function ProfileForm () {
           {goal ? null : <DisplayEmptyWarning />}
         </View>
       </View>
+      <ThickDivider />
       <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <TouchableOpacity
-          onPress={() => finalCaloriesIntake(age, gender, height, weight, activity, goal)}
-        >
-          <Text>
-            Display BMR test
+        <View>
+          <Text style={styles.title}>
+            {
+              `Your ideal calories intake : ${BMR}` ??
+              'To access your ideal calories intake, please filled out your profile form'}
           </Text>
-        </TouchableOpacity>
+        </View>
       </View>
     </View>
   )
