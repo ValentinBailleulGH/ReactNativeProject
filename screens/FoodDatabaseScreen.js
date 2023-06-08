@@ -1,6 +1,13 @@
 import React, { useState, useContext } from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
-import { Text, Searchbar, Card, List, IconButton, FAB } from 'react-native-paper'
+import {
+  Text,
+  Searchbar,
+  Card,
+  List,
+  IconButton,
+  FAB
+} from 'react-native-paper'
 
 import MainView from '../components/MainView'
 import MealPlanSelectionModal from '../components/MealPlanSelectionModal'

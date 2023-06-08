@@ -5,6 +5,8 @@ import MealFoodsDisplay from './MealFoodsDisplay'
 export default function MealPlan ({
   mealPlan
 }) {
+  console.log('meal plan : ', mealPlan)
+
   return (
     <List.AccordionGroup>
       {mealPlan.map(({ title, data }, index) => {

@@ -6,7 +6,7 @@ import MainView from '../components/MainView'
 import MealPlan from '../components/MealPlan'
 import { MealPlanContext } from '../services/MealPlanContext'
 
-function dayReducer (state, action) {
+function dayReducer(state, action) {
   switch (action.type) {
     case 'next_day':
       return {
@@ -21,7 +21,7 @@ function dayReducer (state, action) {
   }
 }
 
-export default function MealPlanningScreen () {
+export default function MealPlanningScreen() {
   const [dayIndexState, dispatchDayIndex] = useReducer(dayReducer, {
     dayIndex: 0
   })
@@ -51,9 +51,9 @@ export default function MealPlanningScreen () {
           <Card.Title title={currentDay} />
           <Card.Content>
             <MealPlan
-              mealPlan={Object.entries(mealToPlan).map(([key, value]) => ({
-                title: key,
-                data: [...value]
+              mealPlan={Object.entries(mealToPlan[currentDay]).map(([meal, food]) => ({
+                title: meal,
+                data: [...food]
               }))}
             />
           </Card.Content>
