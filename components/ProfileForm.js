@@ -302,14 +302,13 @@ export default function ProfileForm () {
         </View>
       </View>
       <ThickDivider />
-      <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <View>
-          <Text style={styles.title}>
-            {
-              `Your ideal calories intake : ${BMR}` ??
-              'To access your ideal calories intake, please filled out your profile form'}
-          </Text>
-        </View>
+      <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: 40 }}>
+        <Text style={styles.title}>
+          {
+            BMR
+              ? `Your ideal calories intake : ${BMR}`
+              : 'To access your ideal calories intake, please filled out your profile form'}
+        </Text>
       </View>
     </View>
   )
