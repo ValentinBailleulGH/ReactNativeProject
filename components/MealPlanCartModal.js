@@ -16,8 +16,6 @@ export default function MealPlanSelectionModal ({
       >
         <List.AccordionGroup>
           {mealPlan.map((dailyMealPlan) => {
-            console.log(dailyMealPlan)
-
             return (
               <List.Accordion
                 id={dailyMealPlan.title}

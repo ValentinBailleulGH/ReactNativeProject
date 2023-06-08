@@ -1,6 +1,7 @@
-import React, { useReducer, useContext } from 'react'
+import React, { useReducer, useContext, useEffect } from 'react'
 import { View } from 'react-native'
-import { Card, IconButton, Text } from 'react-native-paper'
+import { Card, IconButton, Text, Button } from 'react-native-paper'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import MainView from '../components/MainView'
 import MealPlan from '../components/MealPlan'
@@ -21,23 +22,58 @@ function dayReducer(state, action) {
   }
 }
 
-export default function MealPlanningScreen() {
+export default function MealPlanningScreen({ navigation }) {
   const [dayIndexState, dispatchDayIndex] = useReducer(dayReducer, {
     dayIndex: 0
   })
   const { mealToPlan, setMealToPlan } = useContext(MealPlanContext)
-
   const currentDay = Object.keys(mealToPlan)[dayIndexState.dayIndex]
+
+  useEffect(() => {
+    saveMealPlan()
+  }, [mealToPlan])
+
+  const saveMealPlan = async () => {
+    try {
+      const mealToPlanJsonValue = JSON.stringify(mealToPlan)
+      await AsyncStorage.setItem('mealToPlan', mealToPlanJsonValue)
+    } catch (e) {
+      throw Error('Error saving meal plan to async storage')
+    }
+  }
+
+  const handleDeleteFood = (mealPlan, foodToRemove) => {
+    const indexToRemove = mealToPlan[currentDay][mealPlan].findIndex(
+      (food) => food === foodToRemove
+    )
+
+    if (indexToRemove === -1) {
+      throw Error("Element doesn't exist in mealToPlan")
+    }
+
+    const updatedMealPlan = [...mealToPlan[currentDay][mealPlan]]
+    updatedMealPlan.splice(indexToRemove, 1)
+
+    setMealToPlan({
+      ...mealToPlan,
+      [currentDay]: {
+        ...mealToPlan[currentDay],
+        [mealPlan]: updatedMealPlan
+      }
+    })
+  }
 
   const getDailyCalories = () => {
     let dailySumCalories = 0
 
-    for (const meal in mealToPlan[currentDay]) {
-      const { nutrients: foodNutrients } = mealToPlan[currentDay][meal]
-
-      for (const nutrimentKey in foodNutrients) {
-        const nutrimentValue = foodNutrients[nutrimentKey]
-        dailySumCalories += nutrimentValue
+    for (const mealPlan in mealToPlan[currentDay]) {
+      const foods = mealToPlan[currentDay][mealPlan]
+      for (const food of foods) {
+        const { nutrients: foodNutrients } = food
+        for (const nutrimentKey in foodNutrients) {
+          const nutrimentValue = foodNutrients[nutrimentKey]
+          dailySumCalories += nutrimentValue
+        }
       }
     }
 
@@ -51,10 +87,13 @@ export default function MealPlanningScreen() {
           <Card.Title title={currentDay} />
           <Card.Content>
             <MealPlan
-              mealPlan={Object.entries(mealToPlan[currentDay]).map(([meal, food]) => ({
-                title: meal,
-                data: [...food]
-              }))}
+              mealPlan={Object.entries(mealToPlan[currentDay]).map(
+                ([meal, food]) => ({
+                  title: meal,
+                  data: [...food]
+                })
+              )}
+              handleDeleteFood={handleDeleteFood}
             />
           </Card.Content>
           <Card.Actions>
@@ -78,7 +117,14 @@ export default function MealPlanningScreen() {
             />
           </Card.Actions>
         </Card>
-        <Text>{getDailyCalories()}</Text>
+        <Text variant="titleMedium">{getDailyCalories()}</Text>
+        <Button
+          mode="contained"
+          buttonColor="green"
+          onPress={() => navigation.navigate('FoodDatabase')}
+        >
+          Add a food to your mealPlan
+        </Button>
       </View>
     </MainView>
   )

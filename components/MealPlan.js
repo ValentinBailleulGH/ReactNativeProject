@@ -3,15 +3,14 @@ import { List } from 'react-native-paper'
 import MealFoodsDisplay from './MealFoodsDisplay'
 
 export default function MealPlan ({
-  mealPlan
+  mealPlan,
+  handleDeleteFood
 }) {
-  console.log('meal plan : ', mealPlan)
-
   return (
     <List.AccordionGroup>
-      {mealPlan.map(({ title, data }, index) => {
+      {mealPlan.map(({ title: mealPlan, data }, index) => {
         return (
-          <MealFoodsDisplay title={title} data={data} key={index + 1} />
+          <MealFoodsDisplay mealPlan={mealPlan} data={data} handleDeleteFood={handleDeleteFood} key={index + 1} />
         )
       })}
     </List.AccordionGroup>
