@@ -1,5 +1,5 @@
 import React, { useReducer, useContext, useEffect } from 'react'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { Card, IconButton, Text, Button } from 'react-native-paper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
@@ -8,7 +8,7 @@ import MealPlan from '../components/MealPlan'
 import { MealPlanContext } from '../services/MealPlanContext'
 import TabTitle from '../components/TabTitle'
 
-function dayReducer (state, action) {
+function dayReducer(state, action) {
   switch (action.type) {
     case 'next_day':
       return {
@@ -23,7 +23,7 @@ function dayReducer (state, action) {
   }
 }
 
-export default function MealPlanningScreen ({ navigation }) {
+export default function MealPlanningScreen({ navigation }) {
   const [dayIndexState, dispatchDayIndex] = useReducer(dayReducer, {
     dayIndex: 0
   })
@@ -71,7 +71,8 @@ export default function MealPlanningScreen ({ navigation }) {
       const foods = mealToPlan[currentDay][mealPlan]
       for (const food of foods) {
         const { nutrients: foodNutrients, quantity } = food
-        const nutrimentValueByQuantity = (foodNutrients[nutrimentID] * quantity) / 100
+        const nutrimentValueByQuantity =
+          (foodNutrients[nutrimentID] * quantity) / 100
         finalData += nutrimentValueByQuantity
       }
     }
@@ -97,115 +98,91 @@ export default function MealPlanningScreen ({ navigation }) {
 
   return (
     <MainView>
-      <TabTitle tabTitle='Plan your meals' />
+      <TabTitle tabTitle="Plan your meals" />
+      <ScrollView>
+        <View>
+          <Card>
+            <Card.Title title={currentDay} />
+            <Card.Content>
+              <MealPlan
+                mealPlan={Object.entries(mealToPlan[currentDay]).map(
+                  ([meal, food]) => ({
+                    title: meal,
+                    data: [...food]
+                  })
+                )}
+                handleDeleteFood={handleDeleteFood}
+              />
+            </Card.Content>
+            <Card.Actions>
+              <IconButton
+                icon="arrow-left"
+                onPress={() =>
+                  dispatchDayIndex({
+                    type: 'previous_day',
+                    nbJours: Object.keys(mealToPlan).length
+                  })
+                }
+              />
+              <IconButton
+                icon="arrow-right"
+                onPress={() =>
+                  dispatchDayIndex({
+                    type: 'next_day',
+                    nbJours: Object.keys(mealToPlan).length
+                  })
+                }
+              />
+            </Card.Actions>
+          </Card>
 
-      <View>
-        <Card>
-          <Card.Title title={currentDay} />
-          <Card.Content>
-            <MealPlan
-              mealPlan={Object.entries(mealToPlan[currentDay]).map(
-                ([meal, food]) => ({
-                  title: meal,
-                  data: [...food]
-                })
-              )}
-              handleDeleteFood={handleDeleteFood}
-            />
-          </Card.Content>
-          <Card.Actions>
-            <IconButton
-              icon="arrow-left"
-              onPress={() =>
-                dispatchDayIndex({
-                  type: 'previous_day',
-                  nbJours: Object.keys(mealToPlan).length
-                })
-              }
-            />
-            <IconButton
-              icon="arrow-right"
-              onPress={() =>
-                dispatchDayIndex({
-                  type: 'next_day',
-                  nbJours: Object.keys(mealToPlan).length
-                })
-              }
-            />
-          </Card.Actions>
-        </Card>
+          <View style={{ margin: 20 }}>
+            <Text>{'Today stats:'}</Text>
+            <View
+              style={{
+                margin: 10,
+                gap: 12,
+                display: 'flex',
+                flexDirection: 'row'
+              }}
+            >
+              <View style={{ display: 'flex', gap: 4 }}>
+                <Text>Calories</Text>
+                <Text>Protein</Text>
+                <Text>Fat</Text>
+                <Text>Carbs</Text>
+                <Text>Fibers</Text>
+              </View>
 
-        <View style={{ margin: 20 }}>
-          <Text>
-            {'Today stats:'}
-          </Text>
-          <View style={{ margin: 10, gap: 12, display: 'flex', flexDirection: 'row' }}>
-            <View style={{ display: 'flex', gap: 4 }}>
-              <Text>
-                Calories
-              </Text>
-              <Text>
-                Protein
-              </Text>
-              <Text>
-                Fat
-              </Text>
-              <Text>
-                Carbs
-              </Text>
-              <Text>
-                Fibers
-              </Text>
-            </View>
+              <View style={{ display: 'flex', gap: 4 }}>
+                <Text>{`${getDailyCalories()}`}</Text>
+                <Text>{`${getDailyProtein()}`}</Text>
+                <Text>{`${getDailyFat()}`}</Text>
+                <Text>{`${getDailyCarbs()}`}</Text>
+                <Text>{`${getDailyFibers()}`}</Text>
+              </View>
 
-            <View style={{ display: 'flex', gap: 4 }}>
-              <Text>
-                {`${getDailyCalories()}`}
-              </Text>
-              <Text>
-                {`${getDailyProtein()}`}
-              </Text>
-              <Text>
-                {`${getDailyFat()}`}
-              </Text>
-              <Text>
-                {`${getDailyCarbs()}`}
-              </Text>
-              <Text>
-                {`${getDailyFibers()}`}
-              </Text>
-            </View>
-
-            <View style={{ display: 'flex', gap: 4 }}>
-              <Text>
-                {'(xxx% of ideal intake)'}
-              </Text>
-              <Text>
-                {'(xxx%)'}
-              </Text>
-              <Text>
-                {'(xxx%)'}
-              </Text>
-              <Text>
-                {'(xxx%)'}
-              </Text>
-              <Text>
-                {null}
-              </Text>
+              <View style={{ display: 'flex', gap: 4 }}>
+                <Text>{'(xxx% of ideal intake)'}</Text>
+                <Text>{'(xxx%)'}</Text>
+                <Text>{'(xxx%)'}</Text>
+                <Text>{'(xxx%)'}</Text>
+                <Text>{null}</Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View style={{ marginHorizontal: 10 }}>
-          <Button
-            mode="contained"
-            buttonColor="green"
-            onPress={() => navigation.navigate('FoodDatabase')}
-          >
-            Add food to your Meal Planning
-          </Button>
+          <View style={{ marginHorizontal: 10 }}>
+            <Button
+              mode="contained"
+              buttonColor="green"
+              onPress={() => navigation.navigate('FoodDatabase')}
+            >
+              Add food to your Meal Planning
+            </Button>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </MainView>
   )
 }
