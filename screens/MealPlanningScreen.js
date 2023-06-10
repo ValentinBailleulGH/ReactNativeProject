@@ -121,13 +121,15 @@ export default function MealPlanningScreen ({ navigation }) {
           </Card.Actions>
         </Card>
         <Text variant="titleMedium">{getDailyCalories()}</Text>
-        <Button
-          mode="contained"
-          buttonColor="green"
-          onPress={() => navigation.navigate('FoodDatabase')}
-        >
-          Add a food to your mealPlan
-        </Button>
+        <View style={{ marginHorizontal: 10 }}>
+          <Button
+            mode="contained"
+            buttonColor="green"
+            onPress={() => navigation.navigate('FoodDatabase')}
+          >
+            Add food to your Meal Planning
+          </Button>
+        </View>
       </View>
     </MainView>
   )
