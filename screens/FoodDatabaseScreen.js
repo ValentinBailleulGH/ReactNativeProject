@@ -82,7 +82,6 @@ export default function FoodDatabaseScreen ({ route }) {
         <View style={{ flex: 1 }}>
           <List.Accordion id={foodLabel} key={foodLabel} title={foodLabel}>
             <List.Item
-              key={Math.floor(Math.random() * 9999)}
               title={'For 100g :'}
               style={{ backgroundColor: globalStyles.colors.SecondaryButton }}
             />
