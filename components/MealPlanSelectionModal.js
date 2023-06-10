@@ -36,21 +36,24 @@ export default function MealPlanSelectionModal ({
   ]
 
   const [selectedDay, setSelectedDay] = useState(DAYS_LABEL[0])
-  const [quantity, setQuantity] = useState(1000)
+  const [quantity, setQuantity] = useState('')
 
   const onQuantitySubmit = () => {
     const minQuantity = 1
     const maxQuantity = 3000
 
     if (!quantity) {
-      Alert.alert('Quantity', 'Please select your quantity')
-      setQuantity(null)
+      Alert.alert(
+        'Quantity',
+        'Please select your desired quantity.'
+      )
+      setQuantity('')
     } else if (quantity < minQuantity || quantity > maxQuantity) {
       Alert.alert(
         'Quantity',
-        `Please select an weight between ${minQuantity} and ${maxQuantity}`
+        `Please select a weight between ${minQuantity} and ${maxQuantity} grams.`
       )
-      setQuantity(null)
+      setQuantity('')
     }
   }
 
@@ -99,22 +102,25 @@ export default function MealPlanSelectionModal ({
                 {myMeal}
               </Chip>
             ))}
-          </View>
-          <Text style={styles.title}>Quantity (g) :</Text>
-          <View style={{ gap: 6 }}>
-            <TextInput
-              value={quantity.toString()}
-              onChangeText={setQuantity}
-              placeholder="1000"
-              keyboardType="numeric"
-              maxLength={4}
-              onEndEditing={onQuantitySubmit}
-            />
-            {quantity
-              ? null
-              : (
-              <DisplayWarning warningText="This field cannot be empty" />
-                )}
+
+            <View style={{ marginTop: 12 }}>
+              <SectionTitle title="Quantity (g)" />
+              <View style={{ gap: 6 }}>
+                <TextInput
+                  value={quantity.toString()}
+                  onChangeText={setQuantity}
+                  placeholder="grams"
+                  keyboardType="numeric"
+                  maxLength={4}
+                  onEndEditing={onQuantitySubmit}
+                />
+                {
+                  quantity
+                    ? null
+                    : <DisplayWarning warningText="This field cannot be empty" />
+                }
+              </View>
+            </View>
           </View>
         </View>
 
