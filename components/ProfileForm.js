@@ -4,7 +4,6 @@ import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
 import { Button } from 'react-native-paper'
 
-import ThickDivider from '../components/ThickDivider'
 import DisplayWarning from '../components/DisplayWarning'
 
 const GENDERS = {
@@ -376,8 +375,6 @@ export default function ProfileForm () {
           {goal ? null : <DisplayWarning warningText="This field cannot be empty" />}
         </View>
       </View>
-
-      <ThickDivider />
 
       <View
         style={{
