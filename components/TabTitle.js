@@ -7,6 +7,7 @@ export default function TabTitle ({ tabTitle }) {
     <View
       style={{
         display: 'flex',
+        alignItems: 'center',
         flexDirection: 'row',
         backgroundColor: styles.colors.PrimaryButton,
         padding: 16
@@ -14,10 +15,12 @@ export default function TabTitle ({ tabTitle }) {
     >
       <View>
         <Image
-          source={{
-            uri: 'https://reactnative.dev/img/tiny_logo.png'
-          }}
-          style={{ width: 30, height: 30 }}
+          source={require('../assets/logo_transparent.png')}
+          style={
+            {
+              width: 70,
+              height: 40
+            }}
         />
       </View>
       <Text style={{ fontSize: 24, fontWeight: 'bold', marginLeft: 15 }}>
