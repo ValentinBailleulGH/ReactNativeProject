@@ -139,22 +139,60 @@ export default function MealPlanningScreen ({ navigation }) {
           <Text>
             {'Today stats:'}
           </Text>
-          <View style={{ margin: 10, gap: 2 }}>
-            <Text>
-              {`Calories: ${getDailyCalories()} (xxx% of ideal intake)`}
-            </Text>
-            <Text>
-              {`Protein: ${getDailyProtein()} (xxx%)`}
-            </Text>
-            <Text>
-              {`Fat: ${getDailyFat()} (xxx%)`}
-            </Text>
-            <Text>
-              {`Carbs: ${getDailyCarbs()} (xxx%)`}
-            </Text>
-            <Text>
-              {`Fibers: ${getDailyFibers()}`}
-            </Text>
+          <View style={{ margin: 10, gap: 12, display: 'flex', flexDirection: 'row' }}>
+            <View style={{ display: 'flex', gap: 4 }}>
+              <Text>
+                Calories
+              </Text>
+              <Text>
+                Protein
+              </Text>
+              <Text>
+                Fat
+              </Text>
+              <Text>
+                Carbs
+              </Text>
+              <Text>
+                Fibers
+              </Text>
+            </View>
+
+            <View style={{ display: 'flex', gap: 4 }}>
+              <Text>
+                {`${getDailyCalories()}`}
+              </Text>
+              <Text>
+                {`${getDailyProtein()}`}
+              </Text>
+              <Text>
+                {`${getDailyFat()}`}
+              </Text>
+              <Text>
+                {`${getDailyCarbs()}`}
+              </Text>
+              <Text>
+                {`${getDailyFibers()}`}
+              </Text>
+            </View>
+
+            <View style={{ display: 'flex', gap: 4 }}>
+              <Text>
+                {'(xxx% of ideal intake)'}
+              </Text>
+              <Text>
+                {'(xxx%)'}
+              </Text>
+              <Text>
+                {'(xxx%)'}
+              </Text>
+              <Text>
+                {'(xxx%)'}
+              </Text>
+              <Text>
+                {null}
+              </Text>
+            </View>
           </View>
         </View>
 
