@@ -72,8 +72,7 @@ export default function MealPlanningScreen ({ navigation }) {
       for (const food of foods) {
         const { nutrients: foodNutrients, quantity } = food
         const nutrimentKey = 'ENERC_KCAL'
-        const nutrimentValueByQuantity =
-          (foodNutrients[nutrimentKey] * (quantity ?? 1000)) / 1000
+        const nutrimentValueByQuantity = (foodNutrients[nutrimentKey] * quantity) / 100
         dailySumCalories += nutrimentValueByQuantity
       }
     }
@@ -120,7 +119,13 @@ export default function MealPlanningScreen ({ navigation }) {
             />
           </Card.Actions>
         </Card>
-        <Text variant="titleMedium">{getDailyCalories()}</Text>
+
+        <View style={{ margin: 20 }}>
+          <Text>
+            Daily calories : {getDailyCalories()}
+          </Text>
+        </View>
+
         <View style={{ marginHorizontal: 10 }}>
           <Button
             mode="contained"
