@@ -3,10 +3,8 @@ import { View, FlatList, StyleSheet } from 'react-native'
 import {
   Text,
   Searchbar,
-  Card,
   List,
   IconButton,
-  // FAB,
   Button
 } from 'react-native-paper'
 

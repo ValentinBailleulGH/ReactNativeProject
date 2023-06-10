@@ -1,7 +1,7 @@
 import React from 'react'
 import { List, IconButton } from 'react-native-paper'
 
-export default function MealFoodsDisplay({ mealPlan, data, handleDeleteFood }) {
+export default function MealFoodsDisplay ({ mealPlan, data, handleDeleteFood }) {
   return (
     <List.Accordion id={mealPlan} key={mealPlan} title={mealPlan}>
       {data.map((food, index) => (

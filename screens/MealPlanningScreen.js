@@ -7,7 +7,7 @@ import MainView from '../components/MainView'
 import MealPlan from '../components/MealPlan'
 import { MealPlanContext } from '../services/MealPlanContext'
 
-function dayReducer(state, action) {
+function dayReducer (state, action) {
   switch (action.type) {
     case 'next_day':
       return {
@@ -22,7 +22,7 @@ function dayReducer(state, action) {
   }
 }
 
-export default function MealPlanningScreen({ navigation }) {
+export default function MealPlanningScreen ({ navigation }) {
   const [dayIndexState, dispatchDayIndex] = useReducer(dayReducer, {
     dayIndex: 0
   })
