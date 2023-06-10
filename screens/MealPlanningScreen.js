@@ -64,20 +64,35 @@ export default function MealPlanningScreen ({ navigation }) {
     })
   }
 
-  const getDailyCalories = () => {
-    let dailySumCalories = 0
+  const getDailyData = (nutrimentID) => {
+    let finalData = 0
 
     for (const mealPlan in mealToPlan[currentDay]) {
       const foods = mealToPlan[currentDay][mealPlan]
       for (const food of foods) {
         const { nutrients: foodNutrients, quantity } = food
-        const nutrimentKey = 'ENERC_KCAL'
-        const nutrimentValueByQuantity = (foodNutrients[nutrimentKey] * quantity) / 100
-        dailySumCalories += nutrimentValueByQuantity
+        const nutrimentValueByQuantity = (foodNutrients[nutrimentID] * quantity) / 100
+        finalData += nutrimentValueByQuantity
       }
     }
 
-    return dailySumCalories
+    return finalData.toFixed(0)
+  }
+
+  const getDailyCalories = () => {
+    return getDailyData('ENERC_KCAL')
+  }
+  const getDailyProtein = () => {
+    return getDailyData('PROCNT')
+  }
+  const getDailyFat = () => {
+    return getDailyData('FAT')
+  }
+  const getDailyCarbs = () => {
+    return getDailyData('CHOCDF')
+  }
+  const getDailyFibers = () => {
+    return getDailyData('FIBTG')
   }
 
   return (
@@ -122,8 +137,25 @@ export default function MealPlanningScreen ({ navigation }) {
 
         <View style={{ margin: 20 }}>
           <Text>
-            Daily calories : {getDailyCalories()}
+            {'Today stats:'}
           </Text>
+          <View style={{ margin: 10, gap: 2 }}>
+            <Text>
+              {`Calories: ${getDailyCalories()} (xxx% of ideal intake)`}
+            </Text>
+            <Text>
+              {`Protein: ${getDailyProtein()} (xxx%)`}
+            </Text>
+            <Text>
+              {`Fat: ${getDailyFat()} (xxx%)`}
+            </Text>
+            <Text>
+              {`Carbs: ${getDailyCarbs()} (xxx%)`}
+            </Text>
+            <Text>
+              {`Fibers: ${getDailyFibers()}`}
+            </Text>
+          </View>
         </View>
 
         <View style={{ marginHorizontal: 10 }}>
