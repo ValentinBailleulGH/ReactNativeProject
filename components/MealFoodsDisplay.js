@@ -7,7 +7,7 @@ export default function MealFoodsDisplay({ mealPlan, data, handleDeleteFood }) {
       {data.map((food, index) => (
         <List.Item
           key={`${food.label}-${index}`}
-          title={food.label}
+          title={`${food.label} (${food.quantity}g)`}
           right={(props) => <IconButton iconColor='red' icon="delete" onPress={() => handleDeleteFood(mealPlan, food)} />}
         />
       ))}
