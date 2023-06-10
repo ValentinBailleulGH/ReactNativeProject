@@ -8,7 +8,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HealthGoalsScreen from '../screens/HealthGoalsScreen'
 import FoodDatabaseScreen from '../screens/FoodDatabaseScreen'
 import MealPlanningScreen from '../screens/MealPlanningScreen'
-import ProfileScreen from '../screens/ProfileScreen'
 
 import globalStyles from '../styles'
 
@@ -44,14 +43,6 @@ export default function ViewsHandler () {
               tabBarLabel: 'Meal Planning',
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="calendar-outline" color={color} size={size} />
-              )
-            }}
-          />
-          <Tab.Screen name="Profile" component={ ProfileScreen }
-            options={{
-              tabBarLabel: 'Profile',
-              tabBarIcon: ({ color, size }) => (
-                <Ionicons name="person-circle-outline" color={color} size={size} />
               )
             }}
           />

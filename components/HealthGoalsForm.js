@@ -26,7 +26,7 @@ const GOAL = {
   UP: '1'
 }
 
-export default function ProfileForm () {
+export default function HealthGoalsForm () {
   const [age, setAge] = useState(undefined)
   const [gender, setGender] = useState(undefined)
   const [height, setHeight] = useState(undefined)

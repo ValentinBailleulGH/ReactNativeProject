@@ -1,18 +1,12 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 
 import MainView from '../components/MainView'
-import HeaderBar from '../components/HeaderBar'
+import HealthGoalsForm from '../components/HealthGoalsForm'
 
-export default function HealthGoalsScreen ({ route, navigation }) {
+export default function HealthGoalsScreen () {
   return (
-      <MainView>
-        <HeaderBar />
-        <View>
-          <Text>
-            HealthGoals screen
-          </Text>
-        </View>
-      </MainView>
+    <MainView>
+      <HealthGoalsForm />
+    </MainView>
   )
 }
