@@ -62,11 +62,11 @@ export default function FoodDatabaseScreen ({ route }) {
     const { label: foodLabel, nutrients: foodNutrients } = food
 
     const LABELS_NUTRIMENTS = [
-      'Calories/Energie',
-      'Protéines',
-      'Lipides',
-      'Glucides',
-      'Fibre alimentaire'
+      'Calories',
+      'Protein',
+      'Fat', // lipides
+      'Carbs', // glucides
+      'Fibers'
     ]
 
     return (
