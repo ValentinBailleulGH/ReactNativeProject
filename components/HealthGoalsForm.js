@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
@@ -116,7 +116,7 @@ export default function HealthGoalsForm () {
   }
 
   const onAgeSubmit = () => {
-    const title = 'Your age'
+    const title = 'Age'
     const minAge = 10
 
     if (!age) {
@@ -129,7 +129,7 @@ export default function HealthGoalsForm () {
   }
 
   const onHeightSubmit = () => {
-    const title = 'Your height'
+    const title = 'Height'
     const minHeight = 50
     const maxHeight = 220
 
@@ -146,7 +146,7 @@ export default function HealthGoalsForm () {
   }
 
   const onWeightSubmit = () => {
-    const title = 'Your weight'
+    const title = 'Weight'
     const minWeight = 30
     const maxWeight = 300
 
@@ -163,6 +163,7 @@ export default function HealthGoalsForm () {
   }
 
   return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
     <View>
       {/* DEVS ONLY */}
       <Button
@@ -183,7 +184,7 @@ export default function HealthGoalsForm () {
         {/* AGE */}
         <View style={globalStyles.flexCenter}>
           <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
-            <Text style={styles.title}>Your age :</Text>
+            <Text style={styles.title}>Age :</Text>
             <TextInput
               value={age}
               onChangeText={setAge}
@@ -203,7 +204,7 @@ export default function HealthGoalsForm () {
 
         {/* GENDER */}
         <View style={globalStyles.flexCenter}>
-          <Text style={styles.title}>Your gender :</Text>
+          <Text style={styles.title}>Gender :</Text>
           <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
             <TouchableOpacity
               style={[
@@ -241,7 +242,7 @@ export default function HealthGoalsForm () {
         {/* HEIGHT */}
         <View style={globalStyles.flexCenter}>
           <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
-            <Text style={styles.title}>Your height :</Text>
+            <Text style={styles.title}>Height :</Text>
             <TextInput
               value={height}
               onChangeText={setHeight}
@@ -258,7 +259,7 @@ export default function HealthGoalsForm () {
         {/* WEIGHT */}
         <View style={globalStyles.flexCenter}>
           <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
-            <Text style={styles.title}>Your weight :</Text>
+            <Text style={styles.title}>Weight :</Text>
             <TextInput
               value={weight}
               onChangeText={setWeight}
@@ -274,7 +275,7 @@ export default function HealthGoalsForm () {
 
         {/* ACTIVITY */}
         <View style={globalStyles.flexCenter}>
-          <Text style={styles.title}>Your activity level :</Text>
+          <Text style={styles.title}>Activity level :</Text>
           <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
             <TouchableOpacity
               style={[
@@ -342,7 +343,7 @@ export default function HealthGoalsForm () {
 
         {/* GOAL */}
         <View style={globalStyles.flexCenter}>
-          <Text style={styles.title}>Your weight change goal :</Text>
+          <Text style={styles.title}>Weight change goal :</Text>
           <View style={[globalStyles.flexRowCenter, { gap: 6 }]}>
             <TouchableOpacity
               style={[
@@ -391,6 +392,7 @@ export default function HealthGoalsForm () {
         </Text>
       </View>
     </View>
+    </ScrollView>
   )
 }
 
