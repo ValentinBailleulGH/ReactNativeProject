@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import MainView from '../components/MainView'
 import MealPlan from '../components/MealPlan'
 import { MealPlanContext } from '../services/MealPlanContext'
+import TabTitle from '../components/TabTitle'
 
 function dayReducer (state, action) {
   switch (action.type) {
@@ -82,6 +83,8 @@ export default function MealPlanningScreen ({ navigation }) {
 
   return (
     <MainView>
+      <TabTitle tabTitle='Plan your meals' />
+
       <View>
         <Card>
           <Card.Title title={currentDay} />

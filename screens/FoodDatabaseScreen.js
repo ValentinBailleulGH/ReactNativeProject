@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
-import { View, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList } from 'react-native'
 import {
-  Text,
   Searchbar,
   List,
   IconButton,
@@ -12,6 +11,7 @@ import MainView from '../components/MainView'
 import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
 import FoodApiService from '../services/FoodApiService'
 import { MealPlanContext } from '../services/MealPlanContext'
+import TabTitle from '../components/TabTitle'
 
 export default function FoodDatabaseScreen ({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
@@ -97,11 +97,7 @@ export default function FoodDatabaseScreen ({ route }) {
   return (
     <MainView>
       <View>
-        <View style={styles.titleBox}>
-          <Text style={styles.title}>
-            Rechercher un aliment
-          </Text>
-        </View>
+        <TabTitle tabTitle='Search for food' />
 
         {/* DEVS ONLY */}
         <Button
@@ -138,21 +134,3 @@ export default function FoodDatabaseScreen ({ route }) {
     </MainView>
   )
 }
-
-const styles = StyleSheet.create({
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0
-  },
-  titleBox: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: 20,
-    marginVertical: 10
-  }
-})

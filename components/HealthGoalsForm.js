@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
 import { Button } from 'react-native-paper'
+import TabTitle from '../components/TabTitle'
 
 import DisplayWarning from '../components/DisplayWarning'
 
@@ -165,6 +166,8 @@ export default function HealthGoalsForm () {
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
     <View>
+      <TabTitle tabTitle='Select your profile' />
+
       {/* DEVS ONLY */}
       <Button
         onPress={() => {
