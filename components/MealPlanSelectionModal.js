@@ -17,7 +17,7 @@ const SectionTitle = ({ title }) => {
   )
 }
 
-export default function MealPlanSelectionModal({
+export default function MealPlanSelectionModal ({
   modalIsVisible,
   handleConfirmSelectMealPlan,
   handleAbortSelectMealPlan
@@ -103,16 +103,18 @@ export default function MealPlanSelectionModal({
           <Text style={styles.title}>Quantity (g) :</Text>
           <View style={{ gap: 6 }}>
             <TextInput
-              value={quantity}
+              value={quantity.toString()}
               onChangeText={setQuantity}
               placeholder="1000"
               keyboardType="numeric"
               maxLength={4}
               onEndEditing={onQuantitySubmit}
             />
-            {quantity ? null : (
+            {quantity
+              ? null
+              : (
               <DisplayWarning warningText="This field cannot be empty" />
-            )}
+                )}
           </View>
         </View>
 
