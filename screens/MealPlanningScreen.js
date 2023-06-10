@@ -64,7 +64,7 @@ export default function MealPlanningScreen ({ navigation }) {
     })
   }
 
-  const getDailyData = (nutrimentID) => {
+  const getDailyData = (nutrimentID, decimalPlaces) => {
     let finalData = 0
 
     for (const mealPlan in mealToPlan[currentDay]) {
@@ -76,23 +76,23 @@ export default function MealPlanningScreen ({ navigation }) {
       }
     }
 
-    return finalData.toFixed(0)
+    return finalData.toFixed(decimalPlaces)
   }
 
   const getDailyCalories = () => {
-    return getDailyData('ENERC_KCAL')
+    return getDailyData('ENERC_KCAL', 0)
   }
   const getDailyProtein = () => {
-    return getDailyData('PROCNT')
+    return getDailyData('PROCNT', 2)
   }
   const getDailyFat = () => {
-    return getDailyData('FAT')
+    return getDailyData('FAT', 2)
   }
   const getDailyCarbs = () => {
-    return getDailyData('CHOCDF')
+    return getDailyData('CHOCDF', 2)
   }
   const getDailyFibers = () => {
-    return getDailyData('FIBTG')
+    return getDailyData('FIBTG', 1)
   }
 
   return (
