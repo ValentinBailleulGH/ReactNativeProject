@@ -71,29 +71,28 @@ export default function FoodDatabaseScreen ({ route }) {
     ]
 
     return (
-      <Card>
-        <Card.Title title={foodLabel} />
-        <Card.Content>
-          {Object.values(foodNutrients).map((nutrimentValue, index) => {
-            return (
-              <List.Item
-                key={index}
-                title={`${LABELS_NUTRIMENTS[index]} : ${nutrimentValue}`}
-              />
-            )
-          })}
-        </Card.Content>
-        <Card.Actions>
-          <IconButton
-            icon="plus"
-            rippleColor={'green'}
-            onPress={() => {
-              setFoodSelected(food)
-              setDisplayMealPlanSelectionModal(true)
-            }}
-          />
-        </Card.Actions>
-      </Card>
+      <View style={{ display: 'flex', flexDirection: 'row' }}>
+        <IconButton
+          icon="plus"
+          rippleColor={'green'}
+          onPress={() => {
+            setFoodSelected(food)
+            setDisplayMealPlanSelectionModal(true)
+          }}
+        />
+        <View style={{ flex: 1 }}>
+          <List.Accordion id={foodLabel} key={foodLabel} title={foodLabel}>
+            {Object.values(foodNutrients).map((nutrimentValue, index) => {
+              return (
+                <List.Item
+                  key={index}
+                  title={`${LABELS_NUTRIMENTS[index]} : ${nutrimentValue}`}
+                />
+              )
+            })}
+          </List.Accordion>
+        </View>
+      </View>
     )
   }
 
