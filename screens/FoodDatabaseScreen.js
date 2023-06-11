@@ -125,7 +125,7 @@ export default function FoodDatabaseScreen ({ route }) {
           />
           <View style={{ marginLeft: 10 }}>
             <Text style={{ fontSize: 16 }}>
-              {hintResults.length} results.
+              ~{hintResults.length} results.
             </Text>
           </View>
           <FlatList
