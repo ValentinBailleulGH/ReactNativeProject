@@ -5,7 +5,7 @@ const globalStyles = {
   colors: {
     TextColor: '#0c030a',
     BackgroundColor: '#faebf7',
-    PrimaryButton: '#db708f',
+    PrimaryButton: '#cef0c7',
     SecondaryButton: '#f5ddd6',
     AccentColor: '#b84c2e',
     ActiveTab: '#edb7b7',

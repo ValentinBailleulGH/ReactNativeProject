@@ -125,9 +125,10 @@ export default function MealPlanSelectionModal ({
         </View>
 
         <Button
-          onPress={() =>
+          onPress={() => {
+            if (!quantity) return
             handleConfirmSelectMealPlan(selectedMealPlan, selectedDay, quantity)
-          }
+          }}
         >
           Confirm
         </Button>

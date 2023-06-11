@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react'
-import { View, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList } from 'react-native'
 import {
-  Text,
   Searchbar,
-  Card,
   List,
   IconButton,
-  // FAB,
   Button
 } from 'react-native-paper'
 
@@ -14,6 +11,8 @@ import MainView from '../components/MainView'
 import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
 import FoodApiService from '../services/FoodApiService'
 import { MealPlanContext } from '../services/MealPlanContext'
+import TabTitle from '../components/TabTitle'
+import globalStyles from '../styles'
 
 export default function FoodDatabaseScreen ({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =
@@ -63,11 +62,11 @@ export default function FoodDatabaseScreen ({ route }) {
     const { label: foodLabel, nutrients: foodNutrients } = food
 
     const LABELS_NUTRIMENTS = [
-      'Calories/Energie',
-      'Protéines',
-      'Lipides',
-      'Glucides',
-      'Fibre alimentaire'
+      'Calories',
+      'Protein',
+      'Fat', // lipides
+      'Carbs', // glucides
+      'Fibers'
     ]
 
     return (
@@ -82,6 +81,10 @@ export default function FoodDatabaseScreen ({ route }) {
         />
         <View style={{ flex: 1 }}>
           <List.Accordion id={foodLabel} key={foodLabel} title={foodLabel}>
+            <List.Item
+              title={'For 100g :'}
+              style={{ backgroundColor: globalStyles.colors.SecondaryButton }}
+            />
             {Object.values(foodNutrients).map((nutrimentValue, index) => {
               return (
                 <List.Item
@@ -99,11 +102,7 @@ export default function FoodDatabaseScreen ({ route }) {
   return (
     <MainView>
       <View>
-        <View style={styles.titleBox}>
-          <Text style={styles.title}>
-            Rechercher un aliment
-          </Text>
-        </View>
+        <TabTitle tabTitle='Search for food' />
 
         {/* DEVS ONLY */}
         <Button
@@ -140,21 +139,3 @@ export default function FoodDatabaseScreen ({ route }) {
     </MainView>
   )
 }
-
-const styles = StyleSheet.create({
-  fab: {
-    position: 'absolute',
-    margin: 16,
-    right: 0,
-    bottom: 0
-  },
-  titleBox: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: 20,
-    marginVertical: 10
-  }
-})
