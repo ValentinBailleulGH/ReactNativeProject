@@ -3,7 +3,7 @@ import { List } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
 
-export default function MealFoodsDisplay({ mealPlan, data, handleDeleteFood }) {
+export default function MealFoodsDisplay ({ mealPlan, data, handleDeleteFood }) {
   return (
     <List.Accordion id={mealPlan} key={mealPlan} title={mealPlan}>
       {data.map((food, index) => (

@@ -2,7 +2,6 @@ import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'reac
 import React, { useState, useEffect, useContext } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
-import { Button } from 'react-native-paper'
 import TabTitle from '../components/TabTitle'
 import MainView from '../components/MainView'
 
