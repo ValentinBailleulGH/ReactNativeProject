@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, Text } from 'react-native'
 import {
   Searchbar,
   List,
-  IconButton,
-  Button
+  IconButton
 } from 'react-native-paper'
 
 import MainView from '../components/MainView'
@@ -124,6 +123,11 @@ export default function FoodDatabaseScreen ({ route }) {
             onIconPress={handlePressSearchFoodIcon}
             placeholder="Select your food..."
           />
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ fontSize: 16 }}>
+              {hintResults.length} results.
+            </Text>
+          </View>
           <FlatList
             data={hintResults}
             renderItem={({ item: { food } }) => renderFood(food)}
