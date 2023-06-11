@@ -88,6 +88,9 @@ export default function MealPlanningScreen ({ navigation }) {
   const getDailyCalories = () => {
     return parseFloat(getDailyData('ENERC_KCAL', 0))
   }
+  const getDailyKCal = () => {
+    return (getDailyCalories() / 1000).toFixed(3)
+  }
   const getDailyProtein = () => {
     return parseFloat(getDailyData('PROCNT', 2))
   }
@@ -192,7 +195,7 @@ export default function MealPlanningScreen ({ navigation }) {
               </View>
 
               <View style={{ display: 'flex', gap: 4 }}>
-                <Text>{`${getDailyCalories()} cal`}</Text>
+                <Text>{`${getDailyKCal()} kcal`}</Text>
                 <Text>{`${getDailyProtein()}g`}</Text>
                 <Text>{`${getDailyFat()}g`}</Text>
                 <Text>{`${getDailyCarbs()}g`}</Text>
