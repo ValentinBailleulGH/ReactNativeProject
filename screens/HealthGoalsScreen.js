@@ -1,5 +1,5 @@
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
 import { Button } from 'react-native-paper'
@@ -38,7 +38,7 @@ export default function HealthGoalsScreen () {
   const [activity, setActivity] = useState(undefined)
   const [goal, setGoal] = useState(undefined)
   const [BMR, setBMR] = useState(undefined)
-  const [idealCalories, setIdealCalories] = useState(-1)
+  const { idealCalories, setIdealCalories } = useContext(ProfileContext)
   const [allHooksTruthy, setAllHooksTruthy] = useState(false)
 
   useEffect(() => {
@@ -169,7 +169,6 @@ export default function HealthGoalsScreen () {
   }
 
   return (
-    <ProfileContext.Provider value={{ idealCalories, setIdealCalories }}>
     <MainView>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View>
@@ -404,7 +403,6 @@ export default function HealthGoalsScreen () {
         </View>
       </ScrollView>
     </MainView>
-    </ProfileContext.Provider>
   )
 }
 
