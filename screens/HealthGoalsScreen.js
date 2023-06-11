@@ -175,7 +175,7 @@ export default function HealthGoalsScreen () {
           <TabTitle tabTitle='Select your profile' />
 
           {/* DEVS ONLY */}
-          <Button
+          {/* <Button
             onPress={() => {
               setAge('20')
               setGender(GENDERS.MALE)
@@ -186,7 +186,7 @@ export default function HealthGoalsScreen () {
             }}
           >
             Auto load for developments only
-          </Button>
+          </Button> */}
           {/* DEVS ONLY */}
 
           <View style={styles.mainView}>
