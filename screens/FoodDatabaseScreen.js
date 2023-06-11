@@ -102,18 +102,6 @@ export default function FoodDatabaseScreen ({ route }) {
     <MainView>
       <View>
         <TabTitle tabTitle='Search for food' />
-
-        {/* DEVS ONLY */}
-        {/* <Button
-          onPress={() => {
-            setFoodNameToSearch('Carrot')
-            handlePressSearchFoodIcon()
-          }}
-        >
-          Auto load for developments only
-        </Button> */}
-        {/* DEVS ONLY */}
-
         <View style={{ marginBottom: 20, marginHorizontal: 10, gap: 10, marginTop: 10 }}>
           <Searchbar
             label="Chercher un aliment"

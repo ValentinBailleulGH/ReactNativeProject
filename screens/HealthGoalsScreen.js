@@ -214,21 +214,6 @@ export default function HealthGoalsScreen() {
       <TabTitle tabTitle="Select your profile" />
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View>
-          {/* DEVS ONLY */}
-          {/* <Button
-            onPress={() => {
-              setAge('20')
-              setGender(CONSTANTS.GENDERS.MALE)
-              setHeight('180')
-              setWeight('74')
-              setActivity(CONSTANTS.ACTIVITY.MODERATELY_ACTIVE)
-              setGoal(CONSTANTS.GOAL.EQUAL)
-            }}
-          >
-            Auto load for developments only
-          </Button> */}
-          {/* DEVS ONLY */}
-
           <View style={styles.mainView}>
             {/* AGE */}
             <View style={globalStyles.flexCenter}>
