@@ -391,7 +391,8 @@ export default function HealthGoalsScreen () {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              margin: 40
+              marginHorizontal: 30,
+              marginBottom: 20
             }}
           >
             <Text style={styles.title}>

@@ -131,8 +131,8 @@ export default function MealPlanningScreen ({ navigation }) {
   }
   const currentCaloriesAreGood = () => {
     const cal = getDailyCaloriesPercentage()
-    const min = cal - (cal * 10) / 100
-    const max = cal + (cal * 10) / 100
+    const min = 90
+    const max = 110
     return min < cal && cal < max
   }
 
