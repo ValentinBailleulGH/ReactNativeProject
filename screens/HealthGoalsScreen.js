@@ -55,7 +55,6 @@ export default function HealthGoalsScreen() {
   )
 
   useEffect(() => {
-    AsyncStorage.clear()
     getProfilAsyncStorage()
   }, [])
 
