@@ -102,13 +102,22 @@ export default function MealPlanningScreen ({ navigation }) {
     return getDailyProtein() + getDailyFat() + getDailyCarbs()
   }
   const getDailyProteinPercentage = () => {
-    return ((getDailyProtein() * 100) / getDailyMacros()).toFixed(1)
+    const p = getDailyProtein()
+    const all = getDailyMacros()
+    if (!p || !all) return '-'
+    return (p * 100 / all).toFixed(1)
   }
   const getDailyFatPercentage = () => {
-    return ((getDailyFat() * 100) / getDailyMacros()).toFixed(1)
+    const f = getDailyFat()
+    const all = getDailyMacros()
+    if (!f || !all) return '-'
+    return (f * 100 / all).toFixed(1)
   }
   const getDailyCarbsPercentage = () => {
-    return ((getDailyCarbs() * 100) / getDailyMacros()).toFixed(1)
+    const c = getDailyCarbs()
+    const all = getDailyMacros()
+    if (!c || !all) return '-'
+    return (c * 100 / all).toFixed(1)
   }
 
   return (
