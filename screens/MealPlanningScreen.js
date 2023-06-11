@@ -30,8 +30,8 @@ export default function MealPlanningScreen ({ navigation }) {
     dayIndex: 0
   })
   const { mealToPlan, setMealToPlan } = useContext(MealPlanContext)
-  const currentDay = Object.keys(mealToPlan)[dayIndexState.dayIndex]
   const { idealCalories, setIdealCalories } = useContext(ProfileContext)
+  const currentDay = Object.keys(mealToPlan)[dayIndexState.dayIndex]
 
   useEffect(() => {
     saveMealPlan()
