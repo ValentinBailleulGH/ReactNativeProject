@@ -126,6 +126,12 @@ export default function MealPlanningScreen ({ navigation }) {
     if (!c || !idealCalories) return '-'
     return (c * 100 / idealCalories).toFixed(1)
   }
+  const currentCaloriesAreGood = () => {
+    const cal = getDailyCaloriesPercentage()
+    const min = 80
+    const max = 120
+    return min < cal && cal < max
+  }
 
   return (
     <MainView>
@@ -195,7 +201,15 @@ export default function MealPlanningScreen ({ navigation }) {
 
               <View style={{ display: 'flex', gap: 4 }}>
                 { idealCalories
-                  ? <Text>{`(${getDailyCaloriesPercentage()}% of ideal cal intake)`}</Text>
+                  ? <Text
+                      style={
+                        currentCaloriesAreGood()
+                          ? { color: 'green' }
+                          : { color: 'red' }
+                      }
+                    >
+                      {`(${getDailyCaloriesPercentage()}% of ideal cal intake)`}
+                    </Text>
                   : <Text style={{ color: globalStyles.colors.ErrorText }}>Fill out your profile.</Text>
                 }
                 <Text>{`(${getDailyProteinPercentage()}% of today's macros)`}</Text>
