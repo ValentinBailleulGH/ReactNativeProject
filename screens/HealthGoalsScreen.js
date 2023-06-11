@@ -170,9 +170,9 @@ export default function HealthGoalsScreen () {
 
   return (
     <MainView>
+      <TabTitle tabTitle='Select your profile' />
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View>
-          <TabTitle tabTitle='Select your profile' />
 
           {/* DEVS ONLY */}
           {/* <Button
