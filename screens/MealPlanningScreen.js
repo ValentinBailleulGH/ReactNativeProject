@@ -119,6 +119,11 @@ export default function MealPlanningScreen ({ navigation }) {
     if (!c || !all) return '-'
     return (c * 100 / all).toFixed(1)
   }
+  const getDailyCaloriesPercentage = () => {
+    const c = getDailyCalories()
+    if (!c || !idealCalories) return '-'
+    return (c * 100 / idealCalories).toFixed(1)
+  }
 
   return (
     <MainView>
@@ -187,7 +192,7 @@ export default function MealPlanningScreen ({ navigation }) {
               </View>
 
               <View style={{ display: 'flex', gap: 4 }}>
-                <Text>{`(${idealCalories}% of ideal cal intake)`}</Text>
+                <Text>{`(${getDailyCaloriesPercentage()}% of ideal cal intake)`}</Text>
                 <Text>{`(${getDailyProteinPercentage()}% of today's macros)`}</Text>
                 <Text>{`(${getDailyFatPercentage()}% of today's macros)`}</Text>
                 <Text>{`(${getDailyCarbsPercentage()}% of today's macros)`}</Text>
