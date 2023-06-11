@@ -8,7 +8,11 @@ import MealPlan from '../components/MealPlan'
 import { MealPlanContext } from '../services/MealPlanContext'
 import TabTitle from '../components/TabTitle'
 
-function dayReducer(state, action) {
+import { ProfileContext } from '../services/ProfileContext'
+
+import globalStyles from '../styles'
+
+function dayReducer (state, action) {
   switch (action.type) {
     case 'next_day':
       return {
@@ -23,12 +27,13 @@ function dayReducer(state, action) {
   }
 }
 
-export default function MealPlanningScreen({ navigation }) {
+export default function MealPlanningScreen ({ navigation }) {
   const [dayIndexState, dispatchDayIndex] = useReducer(dayReducer, {
     dayIndex: 0
   })
   const { mealToPlan, setMealToPlan } = useContext(MealPlanContext)
   const currentDay = Object.keys(mealToPlan)[dayIndexState.dayIndex]
+  const { idealCalories, setIdealCalories } = useContext(ProfileContext)
 
   useEffect(() => {
     saveMealPlan()
@@ -81,19 +86,54 @@ export default function MealPlanningScreen({ navigation }) {
   }
 
   const getDailyCalories = () => {
-    return getDailyData('ENERC_KCAL', 0)
+    return parseFloat(getDailyData('ENERC_KCAL', 0))
+  }
+  const getDailyKCal = () => {
+    return (getDailyCalories() / 1000).toFixed(3)
   }
   const getDailyProtein = () => {
-    return getDailyData('PROCNT', 2)
+    return parseFloat(getDailyData('PROCNT', 2))
   }
   const getDailyFat = () => {
-    return getDailyData('FAT', 2)
+    return parseFloat(getDailyData('FAT', 2))
   }
   const getDailyCarbs = () => {
-    return getDailyData('CHOCDF', 2)
+    return parseFloat(getDailyData('CHOCDF', 2))
   }
   const getDailyFibers = () => {
-    return getDailyData('FIBTG', 1)
+    return parseFloat(getDailyData('FIBTG', 1))
+  }
+  const getDailyMacros = () => {
+    return getDailyProtein() + getDailyFat() + getDailyCarbs()
+  }
+  const getDailyProteinPercentage = () => {
+    const p = getDailyProtein()
+    const all = getDailyMacros()
+    if (!p || !all) return '-'
+    return (p * 100 / all).toFixed(1)
+  }
+  const getDailyFatPercentage = () => {
+    const f = getDailyFat()
+    const all = getDailyMacros()
+    if (!f || !all) return '-'
+    return (f * 100 / all).toFixed(1)
+  }
+  const getDailyCarbsPercentage = () => {
+    const c = getDailyCarbs()
+    const all = getDailyMacros()
+    if (!c || !all) return '-'
+    return (c * 100 / all).toFixed(1)
+  }
+  const getDailyCaloriesPercentage = () => {
+    const c = getDailyCalories()
+    if (!c || !idealCalories) return '-'
+    return (c * 100 / idealCalories).toFixed(1)
+  }
+  const currentCaloriesAreGood = () => {
+    const cal = getDailyCaloriesPercentage()
+    const min = 90
+    const max = 110
+    return min < cal && cal < max
   }
 
   return (
@@ -155,30 +195,41 @@ export default function MealPlanningScreen({ navigation }) {
               </View>
 
               <View style={{ display: 'flex', gap: 4 }}>
-                <Text>{`${getDailyCalories()}`}</Text>
-                <Text>{`${getDailyProtein()}`}</Text>
-                <Text>{`${getDailyFat()}`}</Text>
-                <Text>{`${getDailyCarbs()}`}</Text>
-                <Text>{`${getDailyFibers()}`}</Text>
+                <Text>{`${getDailyKCal()} kcal`}</Text>
+                <Text>{`${getDailyProtein()}g`}</Text>
+                <Text>{`${getDailyFat()}g`}</Text>
+                <Text>{`${getDailyCarbs()}g`}</Text>
+                <Text>{`${getDailyFibers()}g`}</Text>
               </View>
 
               <View style={{ display: 'flex', gap: 4 }}>
-                <Text>{'(xxx% of ideal intake)'}</Text>
-                <Text>{'(xxx%)'}</Text>
-                <Text>{'(xxx%)'}</Text>
-                <Text>{'(xxx%)'}</Text>
+                { idealCalories
+                  ? <Text
+                      style={
+                        currentCaloriesAreGood()
+                          ? { color: 'green' }
+                          : { color: 'red' }
+                      }
+                    >
+                      {`(${getDailyCaloriesPercentage()}% of ideal cal intake)`}
+                    </Text>
+                  : <Text style={{ color: globalStyles.colors.ErrorText }}>Fill out your profile.</Text>
+                }
+                <Text>{`(${getDailyProteinPercentage()}% of today's macros)`}</Text>
+                <Text>{`(${getDailyFatPercentage()}% of today's macros)`}</Text>
+                <Text>{`(${getDailyCarbsPercentage()}% of today's macros)`}</Text>
                 <Text>{null}</Text>
               </View>
             </View>
           </View>
 
-          <View style={{ marginHorizontal: 10 }}>
+          <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
             <Button
               mode="contained"
               buttonColor="green"
               onPress={() => navigation.navigate('FoodDatabase')}
             >
-              Add food to your Meal Planning
+              Add food to your meal planning
             </Button>
           </View>
         </View>

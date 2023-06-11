@@ -1,12 +1,13 @@
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import globalStyles from '../styles'
-import { Button } from 'react-native-paper'
 import TabTitle from '../components/TabTitle'
 import MainView from '../components/MainView'
 
 import DisplayWarning from '../components/DisplayWarning'
+
+import { ProfileContext } from '../services/ProfileContext'
 
 const GENDERS = {
   MALE: 'male',
@@ -36,6 +37,7 @@ export default function HealthGoalsScreen () {
   const [activity, setActivity] = useState(undefined)
   const [goal, setGoal] = useState(undefined)
   const [BMR, setBMR] = useState(undefined)
+  const { idealCalories, setIdealCalories } = useContext(ProfileContext)
   const [allHooksTruthy, setAllHooksTruthy] = useState(false)
 
   useEffect(() => {
@@ -111,6 +113,7 @@ export default function HealthGoalsScreen () {
       const withActivityBMR = adjustBMRWithActivityLevel(initialBMR)
       const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR)
       const finalCalories = withGoalBMR.toFixed(0).toString()
+      setIdealCalories(finalCalories)
       return finalCalories
     } catch (e) {
       return undefined
@@ -166,12 +169,12 @@ export default function HealthGoalsScreen () {
 
   return (
     <MainView>
+      <TabTitle tabTitle='Select your profile' />
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View>
-          <TabTitle tabTitle='Select your profile' />
 
           {/* DEVS ONLY */}
-          <Button
+          {/* <Button
             onPress={() => {
               setAge('20')
               setGender(GENDERS.MALE)
@@ -182,7 +185,7 @@ export default function HealthGoalsScreen () {
             }}
           >
             Auto load for developments only
-          </Button>
+          </Button> */}
           {/* DEVS ONLY */}
 
           <View style={styles.mainView}>
@@ -387,13 +390,14 @@ export default function HealthGoalsScreen () {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              margin: 40
+              marginHorizontal: 30,
+              marginBottom: 20
             }}
           >
             <Text style={styles.title}>
               {BMR
                 ? `Your ideal calories intake : ${BMR}`
-                : 'To access your ideal calories intake, please filled out your profile form'}
+                : 'To access your ideal calories intake, please fill out your profile form'}
             </Text>
           </View>
         </View>

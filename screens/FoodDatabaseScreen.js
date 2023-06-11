@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, Text } from 'react-native'
 import {
   Searchbar,
   List,
-  IconButton,
-  Button
+  IconButton
 } from 'react-native-paper'
 
 import MainView from '../components/MainView'
@@ -105,17 +104,17 @@ export default function FoodDatabaseScreen ({ route }) {
         <TabTitle tabTitle='Search for food' />
 
         {/* DEVS ONLY */}
-        <Button
+        {/* <Button
           onPress={() => {
             setFoodNameToSearch('Carrot')
             handlePressSearchFoodIcon()
           }}
         >
           Auto load for developments only
-        </Button>
+        </Button> */}
         {/* DEVS ONLY */}
 
-        <View style={{ marginBottom: 20, marginHorizontal: 10, gap: 10 }}>
+        <View style={{ marginBottom: 20, marginHorizontal: 10, gap: 10, marginTop: 10 }}>
           <Searchbar
             label="Chercher un aliment"
             value={foodNameToSearch}
@@ -124,6 +123,11 @@ export default function FoodDatabaseScreen ({ route }) {
             onIconPress={handlePressSearchFoodIcon}
             placeholder="Select your food..."
           />
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ fontSize: 16 }}>
+              ~{hintResults.length} results.
+            </Text>
+          </View>
           <FlatList
             data={hintResults}
             renderItem={({ item: { food } }) => renderFood(food)}
