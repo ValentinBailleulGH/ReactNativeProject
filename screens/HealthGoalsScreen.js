@@ -8,6 +8,7 @@ import {
   ScrollView
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import globalStyles from '../styles'
 import MainView from '../components/MainView'
@@ -44,13 +45,62 @@ export default function HealthGoalsScreen() {
   const [goal, setGoal] = useState(null)
   const [BMR, setBMR] = useState(null)
   const { idealCalories, setIdealCalories } = useContext(ProfileContext)
-  const allHooksTruthy = !(!age || !gender || !height || !weight || !activity || !goal)
+  const allHooksTruthy = !(
+    !age ||
+    !gender ||
+    !height ||
+    !weight ||
+    !activity ||
+    !goal
+  )
+
+  useEffect(() => {
+    AsyncStorage.clear()
+    getProfilAsyncStorage()
+  }, [])
 
   useEffect(() => {
     // display BMR
     const calories = finalCaloriesIntake()
     setBMR(calories)
+    saveProfil()
   }, [age, gender, height, weight, activity, goal])
+
+  const getProfilAsyncStorage = async () => {
+    AsyncStorage.getItem('profil')
+      .then((profilAsyncStorage) => {
+        if (profilAsyncStorage !== null) {
+          const profil = JSON.parse(profilAsyncStorage)
+          setAge(profil.age)
+          setGender(profil.gender)
+          setHeight(profil.height)
+          setWeight(profil.weight)
+          setActivity(profil.activity)
+          setGoal(profil.goal)
+          setBMR(profil.BMR)
+        }
+      })
+      .catch((e) => Promise.reject(e))
+  }
+
+  const saveProfil = async () => {
+    try {
+      const profil = {
+        age,
+        gender,
+        height,
+        weight,
+        activity,
+        goal,
+        BMR
+      }
+
+      const profilJsonValue = JSON.stringify(profil)
+      await AsyncStorage.setItem('profil', profilJsonValue)
+    } catch (e) {
+      throw Error('Error saving meal plan to async storage')
+    }
+  }
 
   const getBMR = () => {
     // For men: BMR = 88.362 + (13.397 * weight in kg) + (4.799 * height in cm) - (5.677 * age in years)
