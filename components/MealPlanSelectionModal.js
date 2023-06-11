@@ -7,6 +7,7 @@ import {
   Button,
   Chip
 } from 'react-native-paper'
+
 import DisplayWarning from '../components/DisplayWarning'
 
 const SectionTitle = ({ title }) => {

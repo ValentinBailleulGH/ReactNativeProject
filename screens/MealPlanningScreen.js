@@ -3,14 +3,12 @@ import { View, ScrollView } from 'react-native'
 import { Card, IconButton, Text, Button } from 'react-native-paper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import globalStyles from '../styles'
 import MainView from '../components/MainView'
 import MealPlan from '../components/MealPlan'
-import { MealPlanContext } from '../services/MealPlanContext'
 import TabTitle from '../components/TabTitle'
-
+import { MealPlanContext } from '../services/MealPlanContext'
 import { ProfileContext } from '../services/ProfileContext'
-
-import globalStyles from '../styles'
 
 function dayReducer (state, action) {
   switch (action.type) {

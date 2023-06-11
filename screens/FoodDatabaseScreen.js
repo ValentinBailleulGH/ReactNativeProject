@@ -6,12 +6,12 @@ import {
   IconButton
 } from 'react-native-paper'
 
+import globalStyles from '../styles'
 import MainView from '../components/MainView'
+import TabTitle from '../components/TabTitle'
 import MealPlanSelectionModal from '../components/MealPlanSelectionModal'
 import FoodApiService from '../services/FoodApiService'
 import { MealPlanContext } from '../services/MealPlanContext'
-import TabTitle from '../components/TabTitle'
-import globalStyles from '../styles'
 
 export default function FoodDatabaseScreen ({ route }) {
   const [displayMealPlanSelectionModal, setDisplayMealPlanSelectionModal] =

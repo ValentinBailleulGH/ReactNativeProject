@@ -1,6 +1,7 @@
 import React from 'react'
 import { List } from 'react-native-paper'
 import { Ionicons } from '@expo/vector-icons'
+
 import globalStyles from '../styles'
 
 export default function MealFoodsDisplay ({ mealPlan, data, handleDeleteFood }) {

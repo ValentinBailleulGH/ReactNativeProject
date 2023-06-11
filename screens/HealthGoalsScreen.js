@@ -1,32 +1,31 @@
-import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import React, { useState, useEffect, useContext } from 'react'
+import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+
 import globalStyles from '../styles'
-import TabTitle from '../components/TabTitle'
 import MainView from '../components/MainView'
-
+import TabTitle from '../components/TabTitle'
 import DisplayWarning from '../components/DisplayWarning'
-
 import { ProfileContext } from '../services/ProfileContext'
 
-const GENDERS = {
-  MALE: 'male',
-  FEMALE: 'female',
-  OTHER: 'other'
-}
-
-const ACTIVITY = {
-  SEDENTARY: '0',
-  LIGHTLY_ACTIVE: '1',
-  MODERATELY_ACTIVE: '2',
-  VERYACTIVE: '3',
-  SUPER_ACTIVE: '4'
-}
-
-const GOAL = {
-  DOWN: '-1',
-  EQUAL: '0',
-  UP: '1'
+const CONSTANTS = {
+  GENDERS: {
+    MALE: 'male',
+    FEMALE: 'female',
+    OTHER: 'other'
+  },
+  ACTIVITY: {
+    SEDENTARY: '0',
+    LIGHTLY_ACTIVE: '1',
+    MODERATELY_ACTIVE: '2',
+    VERYACTIVE: '3',
+    SUPER_ACTIVE: '4'
+  },
+  GOAL: {
+    DOWN: '-1',
+    EQUAL: '0',
+    UP: '1'
+  }
 }
 
 export default function HealthGoalsScreen () {
@@ -63,10 +62,10 @@ export default function HealthGoalsScreen () {
     if (!allHooksTruthy) return null
 
     const menBmr = 88.362 + 13.397 * weight + 4.799 * height - 5.677 * age
-    if (gender === GENDERS.MALE) return menBmr
+    if (gender === CONSTANTS.GENDERS.MALE) return menBmr
 
     const womenBmr = 447.593 + 9.247 * weight + 3.098 * height - 4.33 * age
-    if (gender === GENDERS.FEMALE) return womenBmr
+    if (gender === CONSTANTS.GENDERS.FEMALE) return womenBmr
 
     return (menBmr + womenBmr) / 2
   }
@@ -76,15 +75,15 @@ export default function HealthGoalsScreen () {
     if (!BMR) return null
 
     switch (activity) {
-      case ACTIVITY.SEDENTARY:
+      case CONSTANTS.ACTIVITY.SEDENTARY:
         return BMR * 1.2
-      case ACTIVITY.LIGHTLY_ACTIVE:
+      case CONSTANTS.ACTIVITY.LIGHTLY_ACTIVE:
         return BMR * 1.375
-      case ACTIVITY.MODERATELY_ACTIVE:
+      case CONSTANTS.ACTIVITY.MODERATELY_ACTIVE:
         return BMR * 1.55
-      case ACTIVITY.VERYACTIVE:
+      case CONSTANTS.ACTIVITY.VERYACTIVE:
         return BMR * 1.725
-      case ACTIVITY.SUPER_ACTIVE:
+      case CONSTANTS.ACTIVITY.SUPER_ACTIVE:
         return BMR * 1.9
     }
   }
@@ -94,9 +93,9 @@ export default function HealthGoalsScreen () {
     if (!BMR) return null
 
     switch (goal) {
-      case GOAL.DOWN:
+      case CONSTANTS.GOAL.DOWN:
         return BMR - 500
-      case GOAL.UP:
+      case CONSTANTS.GOAL.UP:
         return BMR + 500
       default:
         return BMR
@@ -177,11 +176,11 @@ export default function HealthGoalsScreen () {
           {/* <Button
             onPress={() => {
               setAge('20')
-              setGender(GENDERS.MALE)
+              setGender(CONSTANTS.GENDERS.MALE)
               setHeight('180')
               setWeight('74')
-              setActivity(ACTIVITY.MODERATELY_ACTIVE)
-              setGoal(GOAL.EQUAL)
+              setActivity(CONSTANTS.ACTIVITY.MODERATELY_ACTIVE)
+              setGoal(CONSTANTS.GOAL.EQUAL)
             }}
           >
             Auto load for developments only
@@ -217,9 +216,9 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: gender === GENDERS.MALE ? '#ccc' : '#fff' }
+                    { backgroundColor: gender === CONSTANTS.GENDERS.MALE ? '#ccc' : '#fff' }
                   ]}
-                  onPress={() => setGender(GENDERS.MALE)}
+                  onPress={() => setGender(CONSTANTS.GENDERS.MALE)}
                 >
                   <Ionicons name="male" size={16} />
                 </TouchableOpacity>
@@ -227,9 +226,9 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: gender === GENDERS.FEMALE ? '#ccc' : '#fff' }
+                    { backgroundColor: gender === CONSTANTS.GENDERS.FEMALE ? '#ccc' : '#fff' }
                   ]}
-                  onPress={() => setGender(GENDERS.FEMALE)}
+                  onPress={() => setGender(CONSTANTS.GENDERS.FEMALE)}
                 >
                   <Ionicons name="female" size={16} />
                 </TouchableOpacity>
@@ -237,9 +236,9 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: gender === GENDERS.OTHER ? '#ccc' : '#fff' }
+                    { backgroundColor: gender === CONSTANTS.GENDERS.OTHER ? '#ccc' : '#fff' }
                   ]}
-                  onPress={() => setGender(GENDERS.OTHER)}
+                  onPress={() => setGender(CONSTANTS.GENDERS.OTHER)}
                 >
                   <Ionicons name="body" size={16} />
                 </TouchableOpacity>
@@ -290,10 +289,10 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === ACTIVITY.SEDENTARY ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.SEDENTARY ? '#ccc' : '#fff'
                     }
                   ]}
-                  onPress={() => setActivity(ACTIVITY.SEDENTARY)}
+                  onPress={() => setActivity(CONSTANTS.ACTIVITY.SEDENTARY)}
                 >
                   <Ionicons name="remove" size={16} />
                 </TouchableOpacity>
@@ -302,10 +301,10 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === ACTIVITY.LIGHTLY_ACTIVE ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.LIGHTLY_ACTIVE ? '#ccc' : '#fff'
                     }
                   ]}
-                  onPress={() => setActivity(ACTIVITY.LIGHTLY_ACTIVE)}
+                  onPress={() => setActivity(CONSTANTS.ACTIVITY.LIGHTLY_ACTIVE)}
                 >
                   <Ionicons name="reorder-two" size={16} />
                 </TouchableOpacity>
@@ -314,10 +313,10 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === ACTIVITY.MODERATELY_ACTIVE ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.MODERATELY_ACTIVE ? '#ccc' : '#fff'
                     }
                   ]}
-                  onPress={() => setActivity(ACTIVITY.MODERATELY_ACTIVE)}
+                  onPress={() => setActivity(CONSTANTS.ACTIVITY.MODERATELY_ACTIVE)}
                 >
                   <Ionicons name="reorder-three" size={16} />
                 </TouchableOpacity>
@@ -326,10 +325,10 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === ACTIVITY.VERYACTIVE ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.VERYACTIVE ? '#ccc' : '#fff'
                     }
                   ]}
-                  onPress={() => setActivity(ACTIVITY.VERYACTIVE)}
+                  onPress={() => setActivity(CONSTANTS.ACTIVITY.VERYACTIVE)}
                 >
                   <Ionicons name="reorder-four" size={16} />
                 </TouchableOpacity>
@@ -338,10 +337,10 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === ACTIVITY.SUPER_ACTIVE ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.SUPER_ACTIVE ? '#ccc' : '#fff'
                     }
                   ]}
-                  onPress={() => setActivity(ACTIVITY.SUPER_ACTIVE)}
+                  onPress={() => setActivity(CONSTANTS.ACTIVITY.SUPER_ACTIVE)}
                 >
                   <Ionicons name="flame" size={16} />
                 </TouchableOpacity>
@@ -356,27 +355,27 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: goal === GOAL.DOWN ? '#ccc' : '#fff' }
+                    { backgroundColor: goal === CONSTANTS.GOAL.DOWN ? '#ccc' : '#fff' }
                   ]}
-                  onPress={() => setGoal(GOAL.DOWN)}
+                  onPress={() => setGoal(CONSTANTS.GOAL.DOWN)}
                 >
                   <Ionicons name="trending-down" size={16} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: goal === GOAL.EQUAL ? '#ccc' : '#fff' }
+                    { backgroundColor: goal === CONSTANTS.GOAL.EQUAL ? '#ccc' : '#fff' }
                   ]}
-                  onPress={() => setGoal(GOAL.EQUAL)}
+                  onPress={() => setGoal(CONSTANTS.GOAL.EQUAL)}
                 >
                   <Ionicons name="reorder-two" size={16} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: goal === GOAL.UP ? '#ccc' : '#fff' }
+                    { backgroundColor: goal === CONSTANTS.GOAL.UP ? '#ccc' : '#fff' }
                   ]}
-                  onPress={() => setGoal(GOAL.UP)}
+                  onPress={() => setGoal(CONSTANTS.GOAL.UP)}
                 >
                   <Ionicons name="trending-up" size={16} />
                 </TouchableOpacity>

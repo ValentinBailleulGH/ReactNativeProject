@@ -1,15 +1,12 @@
 import React from 'react'
-
 import { Ionicons } from '@expo/vector-icons'
-
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
+import globalStyles from '../styles'
 import HealthGoalsScreen from '../screens/HealthGoalsScreen'
 import FoodDatabaseScreen from '../screens/FoodDatabaseScreen'
 import MealPlanningScreen from '../screens/MealPlanningScreen'
-
-import globalStyles from '../styles'
 
 export default function ViewsHandler () {
   const Tab = createBottomTabNavigator()
