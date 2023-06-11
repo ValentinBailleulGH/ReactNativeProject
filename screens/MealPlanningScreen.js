@@ -10,6 +10,8 @@ import TabTitle from '../components/TabTitle'
 
 import { ProfileContext } from '../services/ProfileContext'
 
+import globalStyles from '../styles'
+
 function dayReducer (state, action) {
   switch (action.type) {
     case 'next_day':
@@ -192,7 +194,10 @@ export default function MealPlanningScreen ({ navigation }) {
               </View>
 
               <View style={{ display: 'flex', gap: 4 }}>
-                <Text>{`(${getDailyCaloriesPercentage()}% of ideal cal intake)`}</Text>
+                { idealCalories
+                  ? <Text>{`(${getDailyCaloriesPercentage()}% of ideal cal intake)`}</Text>
+                  : <Text style={{ color: globalStyles.colors.ErrorText }}>Fill out your profile.</Text>
+                }
                 <Text>{`(${getDailyProteinPercentage()}% of today's macros)`}</Text>
                 <Text>{`(${getDailyFatPercentage()}% of today's macros)`}</Text>
                 <Text>{`(${getDailyCarbsPercentage()}% of today's macros)`}</Text>
