@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native'
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Alert,
+  ScrollView
+} from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import globalStyles from '../styles'
 import MainView from '../components/MainView'
@@ -28,31 +36,70 @@ const CONSTANTS = {
   }
 }
 
-export default function HealthGoalsScreen () {
-  const [age, setAge] = useState(undefined)
-  const [gender, setGender] = useState(undefined)
-  const [height, setHeight] = useState(undefined)
-  const [weight, setWeight] = useState(undefined)
-  const [activity, setActivity] = useState(undefined)
-  const [goal, setGoal] = useState(undefined)
-  const [BMR, setBMR] = useState(undefined)
+export default function HealthGoalsScreen() {
+  const [age, setAge] = useState(null)
+  const [gender, setGender] = useState(null)
+  const [height, setHeight] = useState(null)
+  const [weight, setWeight] = useState(null)
+  const [activity, setActivity] = useState(null)
+  const [goal, setGoal] = useState(null)
+  const [BMR, setBMR] = useState(null)
   const { idealCalories, setIdealCalories } = useContext(ProfileContext)
-  const [allHooksTruthy, setAllHooksTruthy] = useState(false)
+  const allHooksTruthy = !(
+    !age ||
+    !gender ||
+    !height ||
+    !weight ||
+    !activity ||
+    !goal
+  )
 
   useEffect(() => {
-    // Check if any of the hooks are falsy
-    if (!age || !gender || !height || !weight || !activity || !goal) {
-      setAllHooksTruthy(false)
-    } else {
-      setAllHooksTruthy(true)
-    }
-  }, [age, gender, height, weight, activity, goal])
+    getProfilAsyncStorage()
+  }, [])
 
   useEffect(() => {
     // display BMR
     const calories = finalCaloriesIntake()
-    setBMR(calories ?? undefined)
+    setBMR(calories)
+    saveProfil()
   }, [age, gender, height, weight, activity, goal])
+
+  const getProfilAsyncStorage = async () => {
+    AsyncStorage.getItem('profil')
+      .then((profilAsyncStorage) => {
+        if (profilAsyncStorage !== null) {
+          const profil = JSON.parse(profilAsyncStorage)
+          setAge(profil.age)
+          setGender(profil.gender)
+          setHeight(profil.height)
+          setWeight(profil.weight)
+          setActivity(profil.activity)
+          setGoal(profil.goal)
+          setBMR(profil.BMR)
+        }
+      })
+      .catch((e) => Promise.reject(e))
+  }
+
+  const saveProfil = async () => {
+    try {
+      const profil = {
+        age,
+        gender,
+        height,
+        weight,
+        activity,
+        goal,
+        BMR
+      }
+
+      const profilJsonValue = JSON.stringify(profil)
+      await AsyncStorage.setItem('profil', profilJsonValue)
+    } catch (e) {
+      throw Error('Error saving meal plan to async storage')
+    }
+  }
 
   const getBMR = () => {
     // For men: BMR = 88.362 + (13.397 * weight in kg) + (4.799 * height in cm) - (5.677 * age in years)
@@ -103,20 +150,16 @@ export default function HealthGoalsScreen () {
   }
 
   const finalCaloriesIntake = () => {
-    try {
-      if (!allHooksTruthy) {
-        throw new Error('Form is not filled out')
-      }
-
-      const initialBMR = getBMR()
-      const withActivityBMR = adjustBMRWithActivityLevel(initialBMR)
-      const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR)
-      const finalCalories = withGoalBMR.toFixed(0).toString()
-      setIdealCalories(finalCalories)
-      return finalCalories
-    } catch (e) {
-      return undefined
+    if (!allHooksTruthy) {
+      return null
     }
+
+    const initialBMR = getBMR()
+    const withActivityBMR = adjustBMRWithActivityLevel(initialBMR)
+    const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR)
+    const finalCalories = withGoalBMR.toFixed(0).toString()
+    setIdealCalories(finalCalories)
+    return finalCalories
   }
 
   const onAgeSubmit = () => {
@@ -168,10 +211,9 @@ export default function HealthGoalsScreen () {
 
   return (
     <MainView>
-      <TabTitle tabTitle='Select your profile' />
+      <TabTitle tabTitle="Select your profile" />
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View>
-
           {/* DEVS ONLY */}
           {/* <Button
             onPress={() => {
@@ -194,7 +236,9 @@ export default function HealthGoalsScreen () {
                 <Text style={styles.title}>Age :</Text>
                 <TextInput
                   value={age}
-                  onChangeText={setAge}
+                  onChangeText={(value) =>
+                    setAge(value.replaceAll('.', '').replaceAll(',', ''))
+                  }
                   placeholder="-"
                   keyboardType="numeric"
                   maxLength={2}
@@ -202,11 +246,9 @@ export default function HealthGoalsScreen () {
                   style={age ? styles.textAnswer : styles.placeholderText}
                 />
               </View>
-              {age
-                ? null
-                : (
+              {age ? null : (
                 <DisplayWarning warningText="This field cannot be empty" />
-                  )}
+              )}
             </View>
 
             {/* GENDER */}
@@ -216,7 +258,10 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: gender === CONSTANTS.GENDERS.MALE ? '#ccc' : '#fff' }
+                    {
+                      backgroundColor:
+                        gender === CONSTANTS.GENDERS.MALE ? '#ccc' : '#fff'
+                    }
                   ]}
                   onPress={() => setGender(CONSTANTS.GENDERS.MALE)}
                 >
@@ -226,7 +271,10 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: gender === CONSTANTS.GENDERS.FEMALE ? '#ccc' : '#fff' }
+                    {
+                      backgroundColor:
+                        gender === CONSTANTS.GENDERS.FEMALE ? '#ccc' : '#fff'
+                    }
                   ]}
                   onPress={() => setGender(CONSTANTS.GENDERS.FEMALE)}
                 >
@@ -236,14 +284,19 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: gender === CONSTANTS.GENDERS.OTHER ? '#ccc' : '#fff' }
+                    {
+                      backgroundColor:
+                        gender === CONSTANTS.GENDERS.OTHER ? '#ccc' : '#fff'
+                    }
                   ]}
                   onPress={() => setGender(CONSTANTS.GENDERS.OTHER)}
                 >
                   <Ionicons name="body" size={16} />
                 </TouchableOpacity>
               </View>
-              {gender ? null : <DisplayWarning warningText="This field cannot be empty" />}
+              {gender ? null : (
+                <DisplayWarning warningText="This field cannot be empty" />
+              )}
             </View>
 
             {/* HEIGHT */}
@@ -252,7 +305,9 @@ export default function HealthGoalsScreen () {
                 <Text style={styles.title}>Height :</Text>
                 <TextInput
                   value={height}
-                  onChangeText={setHeight}
+                  onChangeText={(value) =>
+                    setHeight(value.replaceAll('.', '').replaceAll(',', ''))
+                  }
                   placeholder="in cm"
                   keyboardType="numeric"
                   maxLength={3}
@@ -260,7 +315,9 @@ export default function HealthGoalsScreen () {
                   style={height ? styles.textAnswer : styles.placeholderText}
                 />
               </View>
-              {height ? null : <DisplayWarning warningText="This field cannot be empty" />}
+              {height ? null : (
+                <DisplayWarning warningText="This field cannot be empty" />
+              )}
             </View>
 
             {/* WEIGHT */}
@@ -269,7 +326,9 @@ export default function HealthGoalsScreen () {
                 <Text style={styles.title}>Weight :</Text>
                 <TextInput
                   value={weight}
-                  onChangeText={setWeight}
+                  onChangeText={(value) =>
+                    setWeight(value.replaceAll('.', '').replaceAll(',', ''))
+                  }
                   placeholder="in kg"
                   keyboardType="numeric"
                   maxLength={3}
@@ -277,7 +336,9 @@ export default function HealthGoalsScreen () {
                   style={weight ? styles.textAnswer : styles.placeholderText}
                 />
               </View>
-              {weight ? null : <DisplayWarning warningText="This field cannot be empty" />}
+              {weight ? null : (
+                <DisplayWarning warningText="This field cannot be empty" />
+              )}
             </View>
 
             {/* ACTIVITY */}
@@ -289,7 +350,9 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === CONSTANTS.ACTIVITY.SEDENTARY ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.SEDENTARY
+                          ? '#ccc'
+                          : '#fff'
                     }
                   ]}
                   onPress={() => setActivity(CONSTANTS.ACTIVITY.SEDENTARY)}
@@ -301,7 +364,9 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === CONSTANTS.ACTIVITY.LIGHTLY_ACTIVE ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.LIGHTLY_ACTIVE
+                          ? '#ccc'
+                          : '#fff'
                     }
                   ]}
                   onPress={() => setActivity(CONSTANTS.ACTIVITY.LIGHTLY_ACTIVE)}
@@ -313,10 +378,14 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === CONSTANTS.ACTIVITY.MODERATELY_ACTIVE ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.MODERATELY_ACTIVE
+                          ? '#ccc'
+                          : '#fff'
                     }
                   ]}
-                  onPress={() => setActivity(CONSTANTS.ACTIVITY.MODERATELY_ACTIVE)}
+                  onPress={() =>
+                    setActivity(CONSTANTS.ACTIVITY.MODERATELY_ACTIVE)
+                  }
                 >
                   <Ionicons name="reorder-three" size={16} />
                 </TouchableOpacity>
@@ -325,7 +394,9 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === CONSTANTS.ACTIVITY.VERYACTIVE ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.VERYACTIVE
+                          ? '#ccc'
+                          : '#fff'
                     }
                   ]}
                   onPress={() => setActivity(CONSTANTS.ACTIVITY.VERYACTIVE)}
@@ -337,7 +408,9 @@ export default function HealthGoalsScreen () {
                     styles.icon,
                     {
                       backgroundColor:
-                        activity === CONSTANTS.ACTIVITY.SUPER_ACTIVE ? '#ccc' : '#fff'
+                        activity === CONSTANTS.ACTIVITY.SUPER_ACTIVE
+                          ? '#ccc'
+                          : '#fff'
                     }
                   ]}
                   onPress={() => setActivity(CONSTANTS.ACTIVITY.SUPER_ACTIVE)}
@@ -345,7 +418,9 @@ export default function HealthGoalsScreen () {
                   <Ionicons name="flame" size={16} />
                 </TouchableOpacity>
               </View>
-              {activity ? null : <DisplayWarning warningText="This field cannot be empty" />}
+              {activity ? null : (
+                <DisplayWarning warningText="This field cannot be empty" />
+              )}
             </View>
 
             {/* GOAL */}
@@ -355,7 +430,10 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: goal === CONSTANTS.GOAL.DOWN ? '#ccc' : '#fff' }
+                    {
+                      backgroundColor:
+                        goal === CONSTANTS.GOAL.DOWN ? '#ccc' : '#fff'
+                    }
                   ]}
                   onPress={() => setGoal(CONSTANTS.GOAL.DOWN)}
                 >
@@ -364,7 +442,10 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: goal === CONSTANTS.GOAL.EQUAL ? '#ccc' : '#fff' }
+                    {
+                      backgroundColor:
+                        goal === CONSTANTS.GOAL.EQUAL ? '#ccc' : '#fff'
+                    }
                   ]}
                   onPress={() => setGoal(CONSTANTS.GOAL.EQUAL)}
                 >
@@ -373,14 +454,19 @@ export default function HealthGoalsScreen () {
                 <TouchableOpacity
                   style={[
                     styles.icon,
-                    { backgroundColor: goal === CONSTANTS.GOAL.UP ? '#ccc' : '#fff' }
+                    {
+                      backgroundColor:
+                        goal === CONSTANTS.GOAL.UP ? '#ccc' : '#fff'
+                    }
                   ]}
                   onPress={() => setGoal(CONSTANTS.GOAL.UP)}
                 >
                   <Ionicons name="trending-up" size={16} />
                 </TouchableOpacity>
               </View>
-              {goal ? null : <DisplayWarning warningText="This field cannot be empty" />}
+              {goal ? null : (
+                <DisplayWarning warningText="This field cannot be empty" />
+              )}
             </View>
           </View>
 

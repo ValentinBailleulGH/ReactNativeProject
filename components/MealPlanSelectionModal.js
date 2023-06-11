@@ -109,7 +109,9 @@ export default function MealPlanSelectionModal ({
               <View style={{ gap: 6 }}>
                 <TextInput
                   value={quantity.toString()}
-                  onChangeText={setQuantity}
+                  onChangeText={(value) =>
+                    setQuantity(value.replaceAll('.', '').replaceAll(',', ''))
+                  }
                   placeholder="grams"
                   keyboardType="numeric"
                   maxLength={4}
