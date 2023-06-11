@@ -223,13 +223,13 @@ export default function MealPlanningScreen ({ navigation }) {
             </View>
           </View>
 
-          <View style={{ marginHorizontal: 10 }}>
+          <View style={{ marginHorizontal: 10, marginBottom: 10 }}>
             <Button
               mode="contained"
               buttonColor="green"
               onPress={() => navigation.navigate('FoodDatabase')}
             >
-              Add food to your Meal Planning
+              Add food to your meal planning
             </Button>
           </View>
         </View>
