@@ -115,7 +115,7 @@ export default function FoodDatabaseScreen ({ route }) {
         </Button> */}
         {/* DEVS ONLY */}
 
-        <View style={{ marginBottom: 20, marginHorizontal: 10, gap: 10 }}>
+        <View style={{ marginBottom: 20, marginHorizontal: 10, gap: 10, marginTop: 10 }}>
           <Searchbar
             label="Chercher un aliment"
             value={foodNameToSearch}

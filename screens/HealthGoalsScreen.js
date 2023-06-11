@@ -397,7 +397,7 @@ export default function HealthGoalsScreen () {
             <Text style={styles.title}>
               {BMR
                 ? `Your ideal calories intake : ${BMR}`
-                : 'To access your ideal calories intake, please filled out your profile form'}
+                : 'To access your ideal calories intake, please fill out your profile form'}
             </Text>
           </View>
         </View>
