@@ -84,19 +84,31 @@ export default function MealPlanningScreen ({ navigation }) {
   }
 
   const getDailyCalories = () => {
-    return getDailyData('ENERC_KCAL', 0)
+    return parseFloat(getDailyData('ENERC_KCAL', 0))
   }
   const getDailyProtein = () => {
-    return getDailyData('PROCNT', 2)
+    return parseFloat(getDailyData('PROCNT', 2))
   }
   const getDailyFat = () => {
-    return getDailyData('FAT', 2)
+    return parseFloat(getDailyData('FAT', 2))
   }
   const getDailyCarbs = () => {
-    return getDailyData('CHOCDF', 2)
+    return parseFloat(getDailyData('CHOCDF', 2))
   }
   const getDailyFibers = () => {
-    return getDailyData('FIBTG', 1)
+    return parseFloat(getDailyData('FIBTG', 1))
+  }
+  const getDailyMacros = () => {
+    return getDailyProtein() + getDailyFat() + getDailyCarbs()
+  }
+  const getDailyProteinPercentage = () => {
+    return ((getDailyProtein() * 100) / getDailyMacros()).toFixed(1)
+  }
+  const getDailyFatPercentage = () => {
+    return ((getDailyFat() * 100) / getDailyMacros()).toFixed(1)
+  }
+  const getDailyCarbsPercentage = () => {
+    return ((getDailyCarbs() * 100) / getDailyMacros()).toFixed(1)
   }
 
   return (
@@ -158,18 +170,18 @@ export default function MealPlanningScreen ({ navigation }) {
               </View>
 
               <View style={{ display: 'flex', gap: 4 }}>
-                <Text>{`${getDailyCalories()}`}</Text>
-                <Text>{`${getDailyProtein()}`}</Text>
-                <Text>{`${getDailyFat()}`}</Text>
-                <Text>{`${getDailyCarbs()}`}</Text>
-                <Text>{`${getDailyFibers()}`}</Text>
+                <Text>{`${getDailyCalories()} cal`}</Text>
+                <Text>{`${getDailyProtein()}g`}</Text>
+                <Text>{`${getDailyFat()}g`}</Text>
+                <Text>{`${getDailyCarbs()}g`}</Text>
+                <Text>{`${getDailyFibers()}g`}</Text>
               </View>
 
               <View style={{ display: 'flex', gap: 4 }}>
-                <Text>{`(${idealCalories}% of ideal intake)`}</Text>
-                <Text>{'(xxx%)'}</Text>
-                <Text>{'(xxx%)'}</Text>
-                <Text>{'(xxx%)'}</Text>
+                <Text>{`(${idealCalories}% of ideal cal intake)`}</Text>
+                <Text>{`(${getDailyProteinPercentage()}% of today's macros)`}</Text>
+                <Text>{`(${getDailyFatPercentage()}% of today's macros)`}</Text>
+                <Text>{`(${getDailyCarbsPercentage()}% of today's macros)`}</Text>
                 <Text>{null}</Text>
               </View>
             </View>
