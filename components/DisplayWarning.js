@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text } from 'react-native-paper'
+
 import globalStyles from '../styles'
 
 export default function DisplayWarning ({

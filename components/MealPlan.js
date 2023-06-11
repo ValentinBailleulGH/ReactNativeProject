@@ -1,5 +1,6 @@
 import React from 'react'
 import { List } from 'react-native-paper'
+
 import MealFoodsDisplay from './MealFoodsDisplay'
 
 export default function MealPlan ({
