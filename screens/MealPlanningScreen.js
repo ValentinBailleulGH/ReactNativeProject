@@ -8,6 +8,8 @@ import MealPlan from '../components/MealPlan'
 import { MealPlanContext } from '../services/MealPlanContext'
 import TabTitle from '../components/TabTitle'
 
+import { ProfileContext } from '../services/ProfileContext'
+
 function dayReducer (state, action) {
   switch (action.type) {
     case 'next_day':
@@ -29,6 +31,7 @@ export default function MealPlanningScreen ({ navigation }) {
   })
   const { mealToPlan, setMealToPlan } = useContext(MealPlanContext)
   const currentDay = Object.keys(mealToPlan)[dayIndexState.dayIndex]
+  const { idealCalories, setIdealCalories } = useContext(ProfileContext)
 
   useEffect(() => {
     saveMealPlan()
@@ -163,7 +166,7 @@ export default function MealPlanningScreen ({ navigation }) {
               </View>
 
               <View style={{ display: 'flex', gap: 4 }}>
-                <Text>{'(xxx% of ideal intake)'}</Text>
+                <Text>{`(${idealCalories}% of ideal intake)`}</Text>
                 <Text>{'(xxx%)'}</Text>
                 <Text>{'(xxx%)'}</Text>
                 <Text>{'(xxx%)'}</Text>

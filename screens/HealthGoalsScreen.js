@@ -8,6 +8,8 @@ import MainView from '../components/MainView'
 
 import DisplayWarning from '../components/DisplayWarning'
 
+import { ProfileContext } from '../services/ProfileContext'
+
 const GENDERS = {
   MALE: 'male',
   FEMALE: 'female',
@@ -36,6 +38,7 @@ export default function HealthGoalsScreen () {
   const [activity, setActivity] = useState(undefined)
   const [goal, setGoal] = useState(undefined)
   const [BMR, setBMR] = useState(undefined)
+  const [idealCalories, setIdealCalories] = useState(-1)
   const [allHooksTruthy, setAllHooksTruthy] = useState(false)
 
   useEffect(() => {
@@ -111,6 +114,7 @@ export default function HealthGoalsScreen () {
       const withActivityBMR = adjustBMRWithActivityLevel(initialBMR)
       const withGoalBMR = adjustBMRWithWeightGoal(withActivityBMR)
       const finalCalories = withGoalBMR.toFixed(0).toString()
+      setIdealCalories(finalCalories)
       return finalCalories
     } catch (e) {
       return undefined
@@ -165,6 +169,7 @@ export default function HealthGoalsScreen () {
   }
 
   return (
+    <ProfileContext.Provider value={{ idealCalories, setIdealCalories }}>
     <MainView>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <View>
@@ -399,6 +404,7 @@ export default function HealthGoalsScreen () {
         </View>
       </ScrollView>
     </MainView>
+    </ProfileContext.Provider>
   )
 }
 
