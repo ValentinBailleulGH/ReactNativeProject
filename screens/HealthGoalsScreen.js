@@ -194,7 +194,7 @@ export default function HealthGoalsScreen () {
                 <Text style={styles.title}>Age :</Text>
                 <TextInput
                   value={age}
-                  onChangeText={setAge}
+                  onChangeText={(value) => setAge(value.replaceAll('.', '').replaceAll(',', ''))}
                   placeholder="-"
                   keyboardType="numeric"
                   maxLength={2}
@@ -252,7 +252,7 @@ export default function HealthGoalsScreen () {
                 <Text style={styles.title}>Height :</Text>
                 <TextInput
                   value={height}
-                  onChangeText={setHeight}
+                  onChangeText={(value) => setHeight(value.replaceAll('.', '').replaceAll(',', ''))}
                   placeholder="in cm"
                   keyboardType="numeric"
                   maxLength={3}
@@ -269,7 +269,7 @@ export default function HealthGoalsScreen () {
                 <Text style={styles.title}>Weight :</Text>
                 <TextInput
                   value={weight}
-                  onChangeText={setWeight}
+                  onChangeText={(value) => setWeight(value.replaceAll('.', '').replaceAll(',', ''))}
                   placeholder="in kg"
                   keyboardType="numeric"
                   maxLength={3}
