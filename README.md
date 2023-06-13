@@ -66,7 +66,7 @@ npx expo start
 
 Wait for the server to start, and then scan the QR code using the Expo Go application on your mobile device.
 
-After scanning the QR code, you will have access to the following four pages:
+After scanning the QR code, you will have access to the following three pages:
 - Health Goals: Allows users to set their meal goals.
 - Food Database: Enables users to search for foods from [food database API](https://developer.edamam.com/food-database-api) and add them to their meal plan based on the day, meal and quantity.
 - Meal Planning: Allows users to view, add, and delete foods from their meal plan, as well as view daily calorie information.
